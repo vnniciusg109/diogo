@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+var port = process.env.PORT || 8080;
 
 
 const app = express()
@@ -14,6 +15,5 @@ require('./src/controllers/event')(app);
 require('./src/controllers/ticket')(app);
 
 
-app.listen(process.env.PORT || 3001, '0.0.0.0', () => {
-    console.log("Server is running.");
-  });
+var server=app.listen(port,function() {
+    console.log("app running on port 8080"); });
