@@ -14,5 +14,6 @@ require('./src/controllers/event')(app);
 require('./src/controllers/ticket')(app);
 
 
-app.listen(5000);
-console.log("Rodando");
+app.listen(process.env.PORT || 3001, '0.0.0.0', () => {
+    console.log("Server is running.");
+  });
