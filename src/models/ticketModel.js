@@ -2,6 +2,9 @@ const mongoose = require ('../database')
 
 const TicketSchema = new mongoose.Schema({
 
+    tickFile :{
+        type:String,
+    },
     tickName :{
          type : String , 
          required : true
