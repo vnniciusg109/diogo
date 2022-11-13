@@ -15,6 +15,7 @@ require('./src/controllers/authController')(app);
 require('./src/controllers/projectController')(app);
 require('./src/controllers/event')(app);
 require('./src/controllers/ticket')(app);
+require('./src/controllers/authEmpresaController')(app);
 
 
 var server=app.listen(port,function() {
