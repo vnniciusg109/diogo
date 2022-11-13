@@ -1,4 +1,4 @@
-const Ticket = require('../models/ticket');
+const Ticket = require('../models/ticketModel');
 const express = require('express');
 const router = express.Router();
 
@@ -29,11 +29,14 @@ router.put('/update',async(req,res) => {
   try{
     const ticket = await Ticket.findById(req.params.id);
     console.log(ticket);
-    ticket.name = req.body.name;
-    ticket.price = req.body.price;
-    ticket.type = req.body.type;
-    ticket.lote = req.body.lote;
-    ticket.status = req.body.status;
+
+    ticket.tickName  = req.body.tickName;
+    ticket.tickPrice = req.body.tickPrice;
+    ticket.tickLocal = req.body.tickLocal;
+    ticket.tickGender  = req.body.tickGender;
+    ticket.tickYear = req.body.tickYear;
+    ticket.tickType = req.body.tickType;
+
     const updatedTicket = await ticket.save();
     return res.json(updatedTicket)
   
