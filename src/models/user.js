@@ -2,11 +2,11 @@ const mongoose = require('../database')
 const bcrypt = require('bcryptjs')
 
 const UserSchema = new mongoose.Schema({
-    name: {
+    username: {
         type: String,
         require : true,
     },
-    second_name: {
+    lastname: {
         type: String,
         require : true,
     },
@@ -15,7 +15,7 @@ const UserSchema = new mongoose.Schema({
         unique: true,
         required: true,
     },
-    phone: {
+    pnumber: {
         type: String,
         unique: true,
         required: true,

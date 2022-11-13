@@ -14,14 +14,14 @@ function generateToken(params = {}) {
 }
 
 router.post('/register', async(req,res)=>{
-    const { email,cpf,phone } = req.body
+    const { email,cpf,pnumber } = req.body
     
     try{
         if(await User.findOne({email}))
         return res.status(400).send({error:'Usuario ja existe'})
         if(await User.findOne({cpf}))
         return res.status(400).send({error:'Usuario ja existe'})
-        if(await User.findOne({phone}))
+        if(await User.findOne({pnumber}))
         return res.status(400).send({error:'Usuario ja existe'})
 
 
