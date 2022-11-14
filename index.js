@@ -14,7 +14,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use('/api/event',event_route)
-app.use('api/ticket',ticket_route)
+app.use('/api/ticket',ticket_route)
 
 
 require('./src/controllers/authController')(app);
