@@ -5,6 +5,7 @@ const TicketSchema = new mongoose.Schema({
     tickFile :{
         type:String,
     },
+
     tickName :{
          type : String , 
          required : true
@@ -35,8 +36,11 @@ const TicketSchema = new mongoose.Schema({
         required: true,
      },
 
+    //tickSeller : [{type:mongoose.Schema.Types.ObjectId, ref : "User"}],
+    //tickEvent : [{type:mongoose.Schema.Types.ObjectId, red: "Event"}]
+
     created_at : {type : Date,default : Date.now},
-    //user : [{type:mongoose.Schema.Types.ObjectId,  ref : 'User'}],
+    
 
 })
 
