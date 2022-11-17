@@ -2,6 +2,7 @@ const mongoose = require('../database')
 const bcrypt = require('bcryptjs')
 
 const PartnerSchema = new mongoose.Schema({
+    
     eventEmail: {
         type: String,
         require : true,

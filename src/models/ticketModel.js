@@ -2,10 +2,6 @@ const mongoose = require ('../database')
 
 const TicketSchema = new mongoose.Schema({
 
-    tickFile :{
-        type:String,
-    },
-
     tickName :{
          type : String , 
          required : true
@@ -35,11 +31,16 @@ const TicketSchema = new mongoose.Schema({
         type: String,
         required: true,
      },
+    
+    tickVendor :{
+        type:String,
+        required:false
+    },
 
-    //tickSeller : [{type:mongoose.Schema.Types.ObjectId, ref : "User"}],
-    //tickEvent : [{type:mongoose.Schema.Types.ObjectId, red: "Event"}]
-
-    created_at : {type : Date,default : Date.now},
+    created_at : {
+        type : Date,
+        default : Date.now
+    },
     
 
 })

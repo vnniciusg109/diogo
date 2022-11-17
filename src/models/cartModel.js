@@ -4,18 +4,13 @@ const mongoose = require ("../database")
 const CartSchema = new mongoose.Schema({
 
     vendor_id : [{
-        type: mongoose.Schema.Types.ObjectId ,
-        ref : " ",
+        type: String,
+        required : true,
     }],
 
     ticket_id: [{
-        type: mongoose.Schema.Types.ObjectId ,
-        ref : "Ticket",
-    }],
-
-    event_id: [{
-        type: mongoose.Schema.Types.ObjectId ,
-        ref : "Event",
+        type: String ,
+        required : true,
     }],
 
     price: [{
@@ -23,8 +18,6 @@ const CartSchema = new mongoose.Schema({
         required : true
     }]
 
-
-    //tickSeller : [{type:mongoose.Schema.Types.ObjectId, ref : "User"}],
 
 })
 

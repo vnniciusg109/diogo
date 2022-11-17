@@ -1,46 +1,76 @@
 const Ticket = require('../models/ticketModel');
-const express = require('express');
-const router = express.Router();
 
-router.get('/list', async(req,res)=> {
-  try{
-  const tickets = await Ticket.find({});
-  return res.json(tickets);
- }catch(err){
-  res.send(err);
- }
+
+
+//Listar todos os ingressos
+const getTickets = ((req, res) => {
+  res.json(Ticket)
 })
+
+
+//Listar ingresso especifico
+const getTicket = ((req, res) => {
+  const id = Number(req.params.ticketID)
+  const ticket = Ticket.find(ticket => ticket.id === id)
+
+      if (!ticket) {
+      return res.status(404).send('Ticket not found')
+  }
+  res.json(ticket)
+})
+
 
 //Criar Ingresso
-router.post('/create', async(req,res) =>{
-  try{
-    const ticket = await Ticket.create(req.body);
-    return res.json(ticket);
-  }catch(err){
-    res.send(err);
+const createTicket = ((req, res) => {
+  const newTicket = {
+      id: Ticket.length + 1,
+      tickName: req.body.tickName,
+      tickPrice: req.body.tickPrice,
+      tickLocal : req.body.tickLocal,
+      tickGender : req.body.tickGender,
+      tickYear : req.body.tickYear,
+      tickType : req.body.tickType,
+      tickVendor : req.body.tickVendor,
   }
+  Ticket.push(newTicket)
+  res.status(201).json(newTicket)
 })
 
-//Atualizar Ingresso
 
-router.put('/update',async(req,res) => {
-  try{
-    const ticket = await Ticket.findById(req.params.id);
-    console.log(ticket);
+//Atualizar dados do ingresso
+const updateTicket = ((req, res) => {
+  const id = Number(req.params.ticketID)
+  const index = Ticket.findIndex(ticket => ticket.id === id)
+  const updatedTicket = {
+      id: Ticket[index].id,
+      tickName: req.body.tickName,
+      tickPrice: req.body.tickPrice,
+      tickLocal : req.body.tickLocal,
+      tickGender : req.body.tickGender,
+      tickYear : req.body.tickYear,
+      tickType : req.body.tickType,
+      tickVendor : req.body.tickVendor,
+      
+  }
 
-    ticket.tickName  = req.body.tickName;
-    ticket.tickPrice = req.body.tickPrice;
-    ticket.tickLocal = req.body.tickLocal;
-    ticket.tickGender  = req.body.tickGender;
-    ticket.tickYear = req.body.tickYear;
-    ticket.tickType = req.body.tickType;
+  Ticket[index] = updatedTicket
+  res.status(200).json('ticket updated')
+})
 
-    const updatedTicket = await ticket.save();
-    return res.json(updatedTicket)
-  
-}catch(err){
-  res.send(err);
+
+//Deletar Ingresso
+const deleteTicket = ((req, res) => {
+  const id = Number(req.params.ticketID)
+  const index = Ticket.findIndex(ticket => ticket.id === id)
+  Ticket.splice(index,1)
+  res.status(200).json('ticket deleted')
+})
+
+
+module.exports = {
+  getTickets,
+  getTicket,
+  createTicket,
+  updateTicket,
+  deleteTicket
 }
-})
-
-module.exports = app =>app.use('/ticket',router)
