@@ -3,11 +3,10 @@ const mongoose = require ("../database")
 
 const CartSchema = new mongoose.Schema({
 
-    vendor_id : [{
-        type: String,
+    price :{
+        type: Number,
         required : true,
-    }],
-
+    },
     ticket_id: [{
         type: String ,
         required : true,
@@ -17,7 +16,6 @@ const CartSchema = new mongoose.Schema({
         type: String, 
         required : true
     }]
-
 
 })
 
