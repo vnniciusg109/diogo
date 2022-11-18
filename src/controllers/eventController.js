@@ -36,10 +36,19 @@ const deleteEvent = ((req, res) => {
         .catch((error) => res.status(404).json({msg: 'Event not found' }))
 })
 
+//Buscar Evento
+const searchEvent = ((req,res,next)=>{
+    var searchParams = req.query.query.toUpperCase().split(' ');
+    Event.find({tags : {$all: searchParams }} , function(e,docs){
+        res.render('index', {results:true, search : req.query.query , list : docs});
+    });
+});
+
 module.exports = {
     getEvents,
     getEvent,
     createEvent,
     updateEvent,
-    deleteEvent
+    deleteEvent,
+    searchEvent
 }

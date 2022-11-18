@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
-const {getEvent,getEvents,createEvent,updateEvent,deleteEvent} = require('../controllers/eventController')
+const {getEvent,getEvents,createEvent,updateEvent,deleteEvent, searchEvent} = require('../controllers/eventController')
 
 
 
@@ -20,5 +20,7 @@ router.put('/:eventID',updateEvent)
 //Deletar Evento
 router.delete('/:eventID',deleteEvent)
 
+//Buscar Evento
+router.get('/search',searchEvent)
 
 module.exports = router
