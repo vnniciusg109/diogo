@@ -5,7 +5,6 @@ const EventSchema = new mongoose.Schema({
    
     evFile:{
         type: String,
-        required: true,
     },
 
     evName:{
