@@ -39,12 +39,11 @@ const deleteTicket = ((req, res) => {
 })
 
 //Buscar Ticket
-const searchTicket = ((req,res,next)=>{
-  var searchParams = req.query.query.toUpperCase().split(' ');
-  Ticket.find({tags : {$all: searchParams }} , function(e,docs){
-      res.render('index', {results:true, search : req.query.query , list : docs});
-  });
-});
+const searchTicket = ((req, res) => {
+  Ticket.findOne({ evName: req.params.evName })
+      .then(result => res.status(200).json({ result }))
+      .catch(() => res.status(404).json({msg: 'Ticket not found'}))
+})
 
 module.exports = {
   getTickets,
