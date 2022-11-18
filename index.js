@@ -1,7 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const event_route = require('./src/routes/event')
-const ticket_route = require('./src/routes/ticket')
+const event_route = require('./src/routes/eventRoute');
+const ticket_route = require('./src/routes/ticketRoute');
+//const cart_route = require('./src/routes/cartRoute');
 const cors = require('cors');
 
 var port = process.env.PORT || 8080;

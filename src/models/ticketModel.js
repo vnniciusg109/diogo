@@ -32,10 +32,9 @@ const TicketSchema = new mongoose.Schema({
         required: true,
      },
     
-    tickVendor :{
-        type:String,
-        required:false
-    },
+    tickVendor :[{
+        type:mongoose.Schema.Types.ObjectId ,  ref : "User"
+    }],
 
     created_at : {
         type : Date,

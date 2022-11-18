@@ -3,18 +3,22 @@ const mongoose = require ("../database")
 
 const CartSchema = new mongoose.Schema({
 
-    price :{
-        type: Number,
-        required : true,
+    total_price : {
+        type:Number,
+        required:true
     },
-    ticket_id: [{
-        type: String ,
-        required : true,
+
+    created_at: {
+        type: Date,
+        default: Date.now
+    },
+
+    ticket_id :[{
+        type:mongoose.Schema.Types.ObjectId , ref : "Ticket"
     }],
 
-    price: [{
-        type: String, 
-        required : true
+    buyer_id :[{
+        type:mongoose.Schema.Types.ObjectId , ref: "User"
     }]
 
 })
