@@ -1,24 +1,24 @@
 const express = require('express')
 const router = express.Router()
 
-const ticketCtrl = require('../controllers/ticketController')
+const {getTicket,getTickets,createTicket,updateTicket,deleteTicket} = require('../controllers/ticketController')
 
 
 
 //Ver todos ingressos
-router.get('/all-ticktes',ticketCtrl.getTickets)
+router.get('/',getTickets)
 
 //Filtrar por ID
-router.get('/:ticketID',ticketCtrl.getTicket)
+router.get('/:ticketID',getTicket)
 
 //Criar Ingresso
-router.post('/create',ticketCtrl.createTicket)
+router.post('/create',createTicket)
 
 //Atualizar Ingresso
-router.put('/:ticketID',ticketCtrl.updateTicket)
+router.put('/:ticketID',updateTicket)
 
 //Deletar Ingresso
-router.delete('/:ticketID',ticketCtrl.deleteTicket)
+router.delete('/:ticketID',deleteTicket)
 
 
 module.exports = router

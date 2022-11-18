@@ -6,7 +6,7 @@ const {getEvent,getEvents,createEvent,updateEvent,deleteEvent} = require('../con
 
 
 //Ver todos eventos
-router.get('/all-events',getEvents)
+router.get('/',getEvents)
 
 //Filtrar por ID
 router.get('/:eventID',getEvent)
