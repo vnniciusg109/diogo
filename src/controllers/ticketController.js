@@ -46,5 +46,4 @@ module.exports = {
   createTicket,
   updateTicket,
   deleteTicket,
-  searchTicket,
 }
