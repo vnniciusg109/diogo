@@ -3,36 +3,50 @@ const mongoose = require ("../database")
 
 const EventSchema = new mongoose.Schema({
    
-    eventname:{
+    evFile:{
         type: String,
         required: true,
-        unique:true
     },
 
-    eventday:{
+    evName:{
         type:String , 
         required: true
     },
 
-    description:{
+    evState:{
         type:String
         ,required:true
     },
 
-    type:{
+    evLocal:{
         type:String,
          required:true
     },
 
-    location:{
+    evYear:{
         type:String,
          required:true
     },
+
+    evType:{
+        type:String,
+         required:true
+    },
+
+    evOverview:{
+        type:String,
+         required:true
+    },
+
+    evTicket :[{
+        type: mongoose.Schema.Types.ObjectId , ref : "Ticket"
+    }],
 
     created_at : {
         type : Date,
         default : Date.now
     },
+
 })
 
 
