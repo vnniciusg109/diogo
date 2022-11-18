@@ -38,7 +38,7 @@ const deleteEvent = ((req, res) => {
 
 //Buscar Ticket
 const searchEvent = ((req, res) => {
-    Event.findOne({ evName: req.params.evName })
+    Event.findOne({ evName: req.params.evNameID })
         .then(result => res.status(200).json({ result }))
         .catch(() => res.status(404).json({msg: 'Event not found'}))
 })

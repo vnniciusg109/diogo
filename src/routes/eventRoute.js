@@ -21,6 +21,6 @@ router.put('/:eventID',updateEvent)
 router.delete('/:eventID',deleteEvent)
 
 //Buscar Evento
-router.get('/:evName',searchEvent)
+router.get('/:evNameiID',searchEvent)
 
 module.exports = router

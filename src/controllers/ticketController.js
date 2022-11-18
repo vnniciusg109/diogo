@@ -38,12 +38,7 @@ const deleteTicket = ((req, res) => {
       .catch((error) => res.status(404).json({msg: 'Ticket not found' }))
 })
 
-//Buscar Ticket
-const searchTicket = ((req, res) => {
-  Ticket.findOne({ evName: req.params.evName })
-      .then(result => res.status(200).json({ result }))
-      .catch(() => res.status(404).json({msg: 'Ticket not found'}))
-})
+
 
 module.exports = {
   getTickets,
