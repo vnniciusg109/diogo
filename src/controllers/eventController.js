@@ -1,55 +1,39 @@
-const events = require('../models/eventModel')
+const Event = require('../models/eventModel')
 
+
+//Listar todos os Eventos
 const getEvents = ((req, res) => {
-    res.json(events)
+    Event.find({})
+        .then(result => res.status(200).json({ result }))
+        .catch(error => res.status(500).json({msg: error}))
 })
 
+//Buscar um Evento em especifico
 const getEvent = ((req, res) => {
-    const id = Number(req.params.eventID)
-    const event = events.find(event => event.id === id)
-
-        if (!event) {
-        return res.status(404).send('event not found')
-    }
-    res.json(event)
+    Event.findOne({ _id: req.params.eventID })
+        .then(result => res.status(200).json({ result }))
+        .catch(() => res.status(404).json({msg: 'Event not found'}))
 })
 
+//Criar um evento
 const createEvent = ((req, res) => {
-    const newEvent = {
-        id: events.length + 1,
-        eventname: req.body.eventname,
-        eventday: req.body.eventday,
-        description : req.body.description,
-        type : req.body.type,
-        location : req.body.location,
-
-    }
-    events.push(newEvent)
-    res.status(201).json(newEvent)
+    Event.create(req.body)
+        .then(result => res.status(200).json({ result }))
+        .catch((error) => res.status(500).json({msg:  error }))
 })
 
+//Atualizar dados de um E vento
 const updateEvent = ((req, res) => {
-    const id = Number(req.params.eventID)
-    const index = events.findIndex(event => event.id === id)
-    const updatedEvent = {
-        id: events[index].id,
-        eventname: req.body.eventname,
-        eventday: req.body.eventday,
-        description : req.body.description,
-        type : req.body.type,
-        location : req.body.location,
-        
-    }
-
-    events[index] = updatedEvent
-    res.status(200).json('event updated')
+    Event.findOneAndUpdate({ _id: req.params.eventID }, req.body, { new: true, runValidators: true })
+        .then(result => res.status(200).json({ result }))
+        .catch((error) => res.status(404).json({msg: 'Event not found' }))
 })
 
+//Deletar um Evento
 const deleteEvent = ((req, res) => {
-    const id = Number(req.params.eventID)
-    const index = events.findIndex(event => event.id === id)
-    events.splice(index,1)
-    res.status(200).json('event deleted')
+    Event.findOneAndDelete({ _id: req.params.eventID })
+        .then(result => res.status(200).json({ result }))
+        .catch((error) => res.status(404).json({msg: 'Event not found' }))
 })
 
 module.exports = {

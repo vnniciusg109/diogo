@@ -1,71 +1,42 @@
 const Ticket = require('../models/ticketModel');
 
 
-
-//Listar todos os ingressos
+//Listar todos ingressos
 const getTickets = ((req, res) => {
-  res.json(Ticket)
+  Ticket.find({})
+      .then(result => res.status(200).json({ result }))
+      .catch(error => res.status(500).json({msg: error}))
 })
 
-
-//Listar ingresso especifico
+//Buscar ingresso especifico
 const getTicket = ((req, res) => {
-  const id = Number(req.params.ticketID)
-  const ticket = Ticket.find(ticket => ticket.id === id)
-
-      if (!ticket) {
-      return res.status(404).send('Ticket not found')
-  }
-  res.json(ticket)
+  Ticket.findOne({ _id: req.params.ticketID })
+      .then(result => res.status(200).json({ result }))
+      .catch(() => res.status(404).json({msg: 'Ticket not found'}))
 })
-
 
 //Criar Ingresso
 const createTicket = ((req, res) => {
-  const newTicket = {
-      id: Ticket.length + 1,
-      tickName: req.body.tickName,
-      tickPrice: req.body.tickPrice,
-      tickLocal : req.body.tickLocal,
-      tickGender : req.body.tickGender,
-      tickYear : req.body.tickYear,
-      tickType : req.body.tickType,
-      tickVendor : req.body.tickVendor,
-  }
-  Ticket.push(newTicket)
-  res.status(201).json(newTicket)
+  Ticket.create(req.body)
+      .then(result => res.status(200).json({ result }))
+      .catch((error) => res.status(500).json({msg:  error }))
 })
 
 
-//Atualizar dados do ingresso
+//Atualizar Ingresso
 const updateTicket = ((req, res) => {
-  const id = Number(req.params.ticketID)
-  const index = Ticket.findIndex(ticket => ticket.id === id)
-  const updatedTicket = {
-      id: Ticket[index].id,
-      tickName: req.body.tickName,
-      tickPrice: req.body.tickPrice,
-      tickLocal : req.body.tickLocal,
-      tickGender : req.body.tickGender,
-      tickYear : req.body.tickYear,
-      tickType : req.body.tickType,
-      tickVendor : req.body.tickVendor,
-      
-  }
-
-  Ticket[index] = updatedTicket
-  res.status(200).json('ticket updated')
+  Ticket.findOneAndUpdate({ _id: req.params.ticketID }, req.body, { new: true, runValidators: true })
+      .then(result => res.status(200).json({ result }))
+      .catch((error) => res.status(404).json({msg: 'Ticket not found' }))
 })
 
 
 //Deletar Ingresso
 const deleteTicket = ((req, res) => {
-  const id = Number(req.params.ticketID)
-  const index = Ticket.findIndex(ticket => ticket.id === id)
-  Ticket.splice(index,1)
-  res.status(200).json('ticket deleted')
+  Ticket.findOneAndDelete({ _id: req.params.ticketID })
+      .then(result => res.status(200).json({ result }))
+      .catch((error) => res.status(404).json({msg: 'Ticket not found' }))
 })
-
 
 module.exports = {
   getTickets,
