@@ -20,8 +20,7 @@ router.put('/:ticketID',updateTicket)
 //Deletar Ingresso
 router.delete('/:ticketID',deleteTicket)
 
-//Buscar Ingresso
-router.get('/search',searchTicket)
+
 
 
 module.exports = router
