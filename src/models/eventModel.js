@@ -22,7 +22,6 @@ const EventSchema = new mongoose.Schema({
         type:String,
          required:true
     },
-
     
     evDate:{
         type:String,
@@ -44,9 +43,9 @@ const EventSchema = new mongoose.Schema({
          required:true
     },
 
-    evTicket :[{
-        type: mongoose.Schema.Types.ObjectId , ref : "Ticket"
-    }],
+    //evTicket :[{
+        //type: mongoose.Schema.Types.ObjectId , ref : "Ticket"
+    //}],
 
     created_at : {
         type : Date,
