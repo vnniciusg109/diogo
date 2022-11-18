@@ -23,6 +23,12 @@ const EventSchema = new mongoose.Schema({
          required:true
     },
 
+    
+    evDate:{
+        type:String,
+         required:true
+    },
+
     evYear:{
         type:String,
          required:true

@@ -13,7 +13,7 @@ const TicketSchema = new mongoose.Schema({
     },
 
     tickLocal :{
-         type : String ,
+        type : String ,
         required : true
     },
 
@@ -32,9 +32,9 @@ const TicketSchema = new mongoose.Schema({
         required: true,
      },
     
-    tickVendor :[{
-        type:mongoose.Schema.Types.ObjectId ,  ref : "User"
-    }],
+    //tickVendor :[{
+        //type:mongoose.Schema.Types.ObjectId ,  ref : "User"
+    //}],
 
     created_at : {
         type : Date,
