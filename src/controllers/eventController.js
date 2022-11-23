@@ -20,7 +20,8 @@ const createEvent =  async(req, res) => {
     try {
 
         const newEvent = new Event({
-            
+
+            evFile:req.body.evFile,
             evName: req.body.evName,
             evState: req.body.evState ,
             evLocal : req.body.evLocal,
