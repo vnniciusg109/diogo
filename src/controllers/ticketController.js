@@ -19,10 +19,10 @@ const getTicket = ((req, res) => {
 
 const createTicket =  async(req, res) => {
   try {
-      const newTicket = new Ticket({
-          ...req.body,
-          owner: req.user._id
-      })
+      const newTicket = new Ticket(
+          req.body,
+          //owner: req.user._id
+      )
       await newTicket.save()
       res.status(201).send(newTicket)
   } catch (error) {
