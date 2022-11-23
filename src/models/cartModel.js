@@ -1,4 +1,4 @@
-const mongoose = require ('mongoose');
+const mongoose = require ('../database');
 const ObjectID = mongoose.Schema.Types.ObjectId
 
 
