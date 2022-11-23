@@ -39,8 +39,6 @@ const UserTestSchema = new mongoose.Schema({
         required: true,
         minLenght: 7,
         trim:true,
-
-
     }
 },{timestamps:true}
 )
