@@ -35,7 +35,7 @@ const Login = (req,res) =>{
             return res.status(404).send({message: "Nenhum usuario encontrado!"});
         }
 
-        var passwordIsValid = bycript.compareSync(
+        var passwordIsValid = bcript.compareSync(
             req.body.password,
             user.password
         );
