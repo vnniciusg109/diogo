@@ -1,12 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const cookie = require('cookie-session');
-
-
-
-
-require('./src/database/index')
 
 var port = process.env.PORT || 8080;
 
@@ -17,14 +11,6 @@ app.use(cors());
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static(__dirname))
-app.use(
-    cookie({
-        name:"test-session",
-        secret : "saijdoiashfiusaf923",
-        httpOnly:true
-    })
-)
-
 
 //API routes
 const event_route = require('./src/routes/eventRoute');
