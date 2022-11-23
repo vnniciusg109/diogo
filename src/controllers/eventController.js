@@ -16,30 +16,12 @@ const getEvent = ((req, res) => {
 })
 
 //Criar Evento
-const createEvent =  async(req, res) => {
-    try {
+const createEvent = ((req,res) => {
+    Event.create(req.body)
+    .then(result => res.status(200).json({ result }))
+    .catch((error) => res.status(400).json({msg: 'Erro' }))
 
-        const newEvent = new Event({
-
-            //evFile:req.body.evFile,
-            evName: req.body.evName,
-            evState: req.body.evState ,
-            evLocal : req.body.evLocal,
-            evDate: req.body.evDate,
-            evYear:req.body.evYear,
-            evType:req.body.evType,
-            evOverview:req.body.evOverview
-            
-     
-        })
-        await newEvent.save()
-        res.status(201).send(newEvent)
-    } catch (error) {
-        console.log({error})
-        res.status(400).send({message: "error"})
-    }
-  }
-  
+})
   
 
 //Atualizar dados de um E vento
