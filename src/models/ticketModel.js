@@ -1,4 +1,5 @@
-const mongoose = require ('../database')
+const mongoose = require ('mongoose')
+const ObjectId = mongoose.Schema.Types.ObjectId
 
 const TicketSchema = new mongoose.Schema({
 
@@ -25,22 +26,22 @@ const TicketSchema = new mongoose.Schema({
     tickYear: {
         type: String,
         required: true,
-     },
+    },
 
     tickType: {
         type: String,
         required: true,
-     },
-    
-    //tickVendor :[{
-        //type:mongoose.Schema.Types.ObjectId ,  ref : "User"
-    //}],
-
-    created_at : {
-        type : Date,
-        default : Date.now
     },
-})
+    
+    ownerTicket : {
+        type: ObjectId,
+        required: true,
+        ref: 'User'
+    },
+
+    },{timestamps:true}
+)
+    
 
 
 const Ticket = mongoose.model("Ticket",TicketSchema);
