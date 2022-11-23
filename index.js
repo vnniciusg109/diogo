@@ -4,6 +4,7 @@ const event_route = require('./src/routes/eventRoute');
 const ticket_route = require('./src/routes/ticketRoute');
 const user_route = require('./src/routes/userRoute');
 const cors = require('cors');
+require('./src/database/index')
 
 var port = process.env.PORT || 8080;
 
