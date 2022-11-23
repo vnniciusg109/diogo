@@ -37,7 +37,7 @@ const Login = (req,res) =>{
             //Verifica se as senhas sao iguais
         .then((passwordCheck) =>{
             if(!passwordCheck){
-                return response.status(400).send({message : "SENHAS DIFERETES",error});
+                return res.status(400).send({message : "SENHAS DIFERETES",error});
             }
             //criar token jwt
             const token = jwt.sign({
@@ -45,16 +45,16 @@ const Login = (req,res) =>{
                 userEmail:user.email,
             },"RANDOM-TOKEN",{expiresIn: "24hr"});
 
-            response.status(200).send({message : "Login realizado com sucesso!",email:user.email,token});
+            res.status(200).send({message : "Login realizado com sucesso!",email:user.email,token});
             })
 
             //Se as senhas nao forem iguais
             .catch((error) => {
-                response.status(400).send({message : "SENHAS DIFERETES",error});
+                res.status(400).send({message : "SENHAS DIFERETES",error});
             });
     })
     .catch((e) => {
-        response.status(404).send({message: "Email not found",e,});
+        res.status(404).send({message: "Email not found",e,});
       });
 
 }
