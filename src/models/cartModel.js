@@ -36,8 +36,6 @@ const CartSchema = new mongoose.Schema({
         updatedAt: 'updated_at' 
     }
 
-
-
 })
 
 

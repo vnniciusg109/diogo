@@ -44,7 +44,7 @@ const EventSchema = new mongoose.Schema({
     },
     
     evTicket :{
-        tye: ObjectID,
+        type: ObjectID,
         required : true,
         ref: 'Ticket'
     },
