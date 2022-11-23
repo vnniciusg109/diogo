@@ -19,18 +19,18 @@ const getEvent = ((req, res) => {
 const createEvent =  async(req, res) => {
     try {
         const newEvent = new Event({
-
+          
           evName: req.body.evName,
           evState: req.body.evState ,
           evLocal : req.body.evLocal,
           evDate: req.body.evDate,
           evYear:req.body.evYear,
           evType:req.body.evType,
-          evOverview:req.body.evOverview
+          evOverview:req.body.evOverview,
          //evTicket: req.ticket._id
 
         })
-        
+
         await newEvent.save()
         res.status(201).send(newEvent)
     } catch (error) {
