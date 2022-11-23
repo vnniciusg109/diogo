@@ -1,21 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const {getEvent,getEvents,createEvent,updateEvent,deleteEvent, searchEvent} = require('../controllers/eventController')
-const multer = require('multer');
-
-const upload = multer({
-    limits: {
-        fileSize: 1000000
-    },
-    fileFilter(req, file, cb) {
-        if(!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
-            return cb( new Error('Selecione um formato de imagem valido'))
-    }
-    cb(undefined, true)
-    }
-})
-
-
+const {getEvent,getEvents,createEvent,updateEvent,deleteEvent} = require('../controllers/eventController')
 
 
 //Ver todos eventos
@@ -25,7 +10,7 @@ router.get('/',getEvents)
 router.get('/:eventID',getEvent)
 
 //Criar Evento
-router.post('/create',upload.single('upload'),createEvent)
+router.post('/create',createEvent)
 
 //Atualizar Evento
 router.put('/:eventID',updateEvent)
@@ -34,6 +19,6 @@ router.put('/:eventID',updateEvent)
 router.delete('/:eventID',deleteEvent)
 
 //Buscar Evento
-router.get('/search/:evNameiID',searchEvent)
+//router.get('/search/:evNameiID',searchEvent)
 
 module.exports = router
