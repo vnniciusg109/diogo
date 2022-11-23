@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const event_route = require('./src/routes/eventRoute');
 const ticket_route = require('./src/routes/ticketRoute');
-//const cart_route = require('./src/routes/cartRoute');
+const user_route = require('./src/routes/userRoute');
 const cors = require('cors');
 
 var port = process.env.PORT || 8080;
@@ -17,6 +17,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 //Rotas
 app.use('/api/event',event_route);
 app.use('/api/ticket',ticket_route);
+app.use('/api/user',user_route);
 
 
 require('./src/controllers/authController')(app);

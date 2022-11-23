@@ -33,7 +33,7 @@ const createTicket = async(req,res) => {
 //Atualizar Ingresso
 const updateTicket = async(req, res) => {
   const updates = Object.keys(req.body)
-  const allowedUpdates = ['']
+  const allowedUpdates = [''] //Inserir campos que podem ser alterados
   const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
   
   if(!isValidOperation){
