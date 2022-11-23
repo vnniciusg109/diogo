@@ -1,4 +1,5 @@
 const Ticket = require('../models/ticketModel');
+const User = require('../models/userModel')
 
 
 //Listar todos ingressos
@@ -19,10 +20,17 @@ const getTicket = ((req, res) => {
 
 const createTicket =  async(req, res) => {
   try {
-      const newTicket = new Ticket(
-          req.body,
-          //owner: req.user._id
-      )
+      const owner = await User.findById(req.body.owner);
+      if(!owner)return res.status(400).send("invalid owner")
+      const newTicket = new Ticket({
+        tickName: req.body.tickName,
+        tickPrice: req.body.tickPrice ,
+        tickLocal : req.body.tickLocal,
+        tickGender: req.body.tickGender,
+        tickYear:req.body.tickYear,
+        tickType:req.body.tickType,
+        owner: req.body.owner
+      })
       await newTicket.save()
       res.status(201).send(newTicket)
   } catch (error) {
