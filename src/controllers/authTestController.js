@@ -3,6 +3,7 @@ const User = require('../models/userModel');
 
 var jwt = require('jsonwebtoken');
 var bcript = require('bcryptjs');
+const { response } = require('express');
 
 //register
 const createUser = (req,res) =>{
@@ -24,37 +25,31 @@ const createUser = (req,res) =>{
 
 //login
 const Login = (req,res) =>{
+
     User.findOne({email:req.body.email})
-    .exec((err,user) =>{
-        if(err){
-            res.status(500).send({message:err})
-            return;
-        }
 
-        if(!user){
-            return res.status(404).send({message: "Nenhum usuario encontrado!"});
-        }
+    //Se o email exitir
+    .then((user) =>{
+        //Compara as senhas
+        bcript
+            .compare(request.body.password,user.password)
 
-        var passwordIsValid = bcript.compareSync(
-            req.body.password,
-            user.password
-        );
+            //Verifica se as senhas sao iguais
+            .then((passwordCheck) =>{
+                if(!passwordCheck){
+                    return response.status(400).send({message : "SENHAS DIFERETES",error,
+                    });
+                }
+                //criar token jwt
+                const token = jwt.sign({
+                    userId:user._id,
+                    userEmail:user.email,
+                },
+                "RANDOM-TOKEN",{expiresIn: "24hr"}
+                );
 
-        if(!passwordIsValid){
-            return res.status(401).send({message:"Senha incorreta!"});
-        }
-
-        var token = jwt.sign({id:user.id},config.secret,{
-            expiresIn:86400
-        });
-
-        req.session.token = token;
-        res.status(200).send({
-            id: user._id,
-            username:user.username,
-            email : user.email,
-            token :req.session.token
-        })
+                response.status(400).send
+            })
     })
 
 }

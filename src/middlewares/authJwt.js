@@ -1,27 +1,18 @@
 const jwt = require('jsonwebtoken');
-const config = require('../config/auth');
 
+module.exports = async (request,response,netx) =>{
+    try{
 
-verifyToken = (req,res,next) =>{
-    let token = req.session.token;
+        const token = await request.headers.authorization.split(" ")[1];
 
-    if(!token){
-        return res.status(403).send({message: "No token provided!"});
+        const decodedToken = await jwt.verify(token,"RANDOM-TOKEN");
+
+        const user = await decodedToken;
+
+        request.user = user;
+
+        netx();
+    }catch(erro){
+        response.status(401).json({error:new Error ("Invalid request!")})
     }
-
-    jwt.verify(token,config.secret , (err,decoded)=>{
-        if(err){
-            return res.status(401).send({message: "Unauthorized!"});
-        }
-        req.userId = decoded.id;
-        next();
-    });
-};
-
-
-
-const authJwt = {
-    verifyToken,
 }
-
-module.exports = authJwt;

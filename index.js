@@ -4,11 +4,6 @@ const cors = require('cors');
 const cookie = require('cookie-session');
 
 
-//var corsOptions = {
-    //origin:"url do site"
-//}
-
-
 
 
 require('./src/database/index')
