@@ -2,7 +2,7 @@ const config = require('../config/auth');
 const User = require('../models/userModel');
 
 var jwt = require('jsonwebtoken');
-var bycript = require('bcryptjs');
+var bcript = require('bcryptjs');
 
 //register
 const createUser = (req,res) =>{
@@ -12,7 +12,7 @@ const createUser = (req,res) =>{
         cpf:req.body.cpf,
         pnumber:req.body.pnumber,
         email:req.body.email,
-        password:bycript.hashSync(req.body,password,8),
+        password:bcript.hashSync(req.body.password,8),
     });
     user.save((err,user) => {
         if(err){
