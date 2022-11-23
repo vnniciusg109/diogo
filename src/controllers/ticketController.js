@@ -17,26 +17,19 @@ const getTicket = ((req, res) => {
 
 //Criar Ingresso
 
-const createTicket = (async(req, res) => {
-  try{
-    const newTicket = {
-      tickName : req.body.tickName,
-      tickPrice :req.body.tickPrice,
-      tickLocal : req.body.tickLocal,
-      tickGender:req.body.tickGender,
-      tickYear:req.body.tickYear,
-      tickType:req.body.tickType,
-      ownerTicket : req.body.user._id       
-  };
-  const ticket = await Ticket.create(newTicket)
-  return res.status(200).send({ message: "Ticket created successfully!", ticket });
-  }catch(error){
-    if (error.code === 11000) return res.status(200).send({ message: "ticket already exist" });
-    return res.status(400).send({ message: "unable to create ticket", error });
+const createTicket =  async(req, res) => {
+  try {
+      const newTicket = new Ticket({
+          ...req.body,
+          owner: req.user._id
+      })
+      await newTicket.save()
+      res.status(201).send(newTicket)
+  } catch (error) {
+      console.log({error})
+      res.status(400).send({message: "error"})
   }
-
-})
-
+}
 
 
 //Atualizar Ingresso
