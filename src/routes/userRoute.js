@@ -1,20 +1,19 @@
 const express = require('express')
 const router = express.Router()
-const Auth = require('../middlewares/authTest');
-const {createAccount,loginAccount,logoutAccount,List} = require('../controllers/authTestController')
+const {createUser,Login,Logout} = require('../controllers/authTestController')
 
 
 
 //Registrar conta 
-router.post('/create-account',createAccount)
+router.post('/create-account',createUser)
 
 //Login
-router.post('/login',loginAccount)
+router.post('/login',Login)
 
 //Logout
-router.post('/logout',Auth,logoutAccount)
+router.post('/logout',Logout)
 
 //List
-router.get('/list',List)
+//router.get('/list',List)
 
 module.exports = router;

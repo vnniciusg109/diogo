@@ -1,59 +1,76 @@
-const User = require("../models/userModel");
+const config = require('../config/auth');
+const User = require('../models/userModel');
 
-//Criar Conta
-const createAccount = async(req,res) =>{
-    const user = User(req.body)
+var jwt = require('jsonwebtoken');
+var bycript = require('bcryptjs');
 
-    try{
-        await user.save()
-        const token = await user.generateAuthToken()
-        res.status (201).send({user,token})
-    }catch(error){
-        res.status(400).send(error)
-    }
+//register
+const createUser = (req,res) =>{
+    const user = new User({
+        username:req.body.username,
+        lastname : req.body.lastname,
+        cpf:req.body.cpf,
+        pnumber:req.body.pnumber,
+        email:req.body.email,
+        password:bycript.hashSync(req.body,password,8),
+    });
+    user.save((err,user) => {
+        if(err){
+            res.status(500).send({message:err});
+            return;
+        }
+    })
 }
 
-//Login
-const loginAccount = async(req,res) =>{
-    try{
-        const user= await User.findByCredentials(req.body.email, req.body.password)
-        const token = await user.generateAuthToken()
-        res.send({user,token})
-    }catch(error){
-        res.status(400).send(error)
-    }
-}
+//login
+const Login = (req,res) =>{
+    User.findOne({email:req.body.email})
+    .exec((err,user) =>{
+        if(err){
+            res.status(500).send({message:err})
+            return;
+        }
 
-//Logout
-const logoutAccount = async(req,res)=>{
-    try{
-        req.user.tokens = req.user.tokens.filter((token) =>{
-            return token.token !== req.token
+        if(!user){
+            return res.status(404).send({message: "Nenhum usuario encontrado!"});
+        }
+
+        var passwordIsValid = bycript.compareSync(
+            req.body.password,
+            user.password
+        );
+
+        if(!passwordIsValid){
+            return res.status(401).send({message:"Senha incorreta!"});
+        }
+
+        var token = jwt.sign({id:user.id},config.secret,{
+            expiresIn:86400
+        });
+
+        req.session.token = token;
+        res.status(200).send({
+            id: user._id,
+            username:user.username,
+            email : user.email,
         })
+    })
 
-        await req.user.save()
-        res.send()
-    }catch(error){
-        res.status(500).send()
+}
+    
+//logout
+const Logout = (req,res) =>{
+    try{
+        req.session = null
+        return res.status(200).send({message:"Saiu!"})
+    }catch(err){
+        this.next(err);
     }
 }
 
 
-const List = async(req,res)=> {
-    try{
-    const users = await User.find({});
-    return res.json(users);
-   }catch(err){
-    res.send(err);
-   }
-}
-
-
-
-module.exports = {
-    createAccount,
-    loginAccount,
-    logoutAccount,
-    List
-    
+module.exports={
+    createUser,
+    Login,
+    Logout
 }
