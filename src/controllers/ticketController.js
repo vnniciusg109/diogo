@@ -1,5 +1,3 @@
-const { update } = require('lodash');
-const Ticket = require('../models/ticketModel');
 const Ticket = require('../models/ticketModel');
 
 
