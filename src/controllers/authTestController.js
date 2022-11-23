@@ -42,15 +42,16 @@ const Login = (req,res) =>{
 
     //Se o email exitir
     .then((user) =>{
+
         //Compara as senhas
-        bcrypt
-        .compare(req.body.password, user.password)
+        bcript
+            .compare(req.body.password, user.password)
 
             //Verifica se as senhas sao iguais
-        .then((passwordCheck) =>{
-            if(!passwordCheck){
-                return res.status(400).send({message : "SENHAS DIFERETES",error});
-            }
+            .then((passwordCheck) =>{
+                if(!passwordCheck){
+                    return res.status(400).send({message : "SENHAS DIFERETES",error});
+                }
             //criar token jwt
             const token = jwt.sign({
                 userId:user._id,
@@ -65,6 +66,8 @@ const Login = (req,res) =>{
                 res.status(400).send({message : "SENHAS DIFERETES",error});
             });
     })
+
+    //Se o e-mail nao existir
     .catch((e) => {
         res.status(404).send({message: "Email not found",e,});
       });
