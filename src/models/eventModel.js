@@ -1,4 +1,5 @@
-const mongoose = require ("../database")
+const mongoose = require ('mongoose')
+const ObjectID = mongoose.Schema.Types.ObjectId
 
 
 const EventSchema = new mongoose.Schema({
@@ -39,17 +40,20 @@ const EventSchema = new mongoose.Schema({
 
     evOverview:{
         type:String,
-         required:true
+        required:true
+    },
+    
+    evTicket :{
+        tye: ObjectID,
+        required : true,
+        ref: 'Ticket'
     },
 
-    //evTicket :[{
-        //type: mongoose.Schema.Types.ObjectId , ref : "Ticket"
-    //}],
 
-    created_at : {
-        type : Date,
-        default : Date.now
-    },
+    timestamps: {
+        createdAt: 'created_at', 
+        updatedAt: 'updated_at' 
+    }
 
 })
 

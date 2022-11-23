@@ -1,4 +1,5 @@
-const mongoose = require ('../database')
+const mongoose = require ('mongoose')
+const ObjectId = mongoose.Schema.Types.ObjectId
 
 const TicketSchema = new mongoose.Schema({
 
@@ -32,14 +33,16 @@ const TicketSchema = new mongoose.Schema({
         required: true,
      },
     
-    //tickVendor :[{
-        //type:mongoose.Schema.Types.ObjectId ,  ref : "User"
-    //}],
+    ownerTicket : {
+        type: ObjectId,
+        required: true,
+        ref: 'User'
+     },
 
-    created_at : {
-        type : Date,
-        default : Date.now
-    },
+    timestamps: {
+        createdAt: 'created_at', 
+        updatedAt: 'updated_at' 
+    }
 })
 
 

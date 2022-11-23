@@ -1,25 +1,42 @@
-const mongoose = require ("../database")
+const mongoose = require ('mongoose');
+const ObjectID = mongoose.Schema.Types.ObjectId
 
 
 const CartSchema = new mongoose.Schema({
 
-    total_price : {
-        type:Number,
-        required:true
+    owner :{
+        type:ObjectID,
+        required:true,
+        ref:'User'
     },
-
-    created_at: {
-        type: Date,
-        default: Date.now
-    },
-
-    ticket_id :[{
-        type:mongoose.Schema.Types.ObjectId , ref : "Ticket"
+    tickets:[{
+        TicketId:{
+            type:ObjectID,
+            required :true,
+            ref:'Ticket'
+        },
+        name:String,
+        quantity:{
+            type:Number,
+            required:true,
+            min:1,
+            default:1,
+            price:Number
+        }
     }],
 
-    buyer_id :[{
-        type:mongoose.Schema.Types.ObjectId , ref: "User"
-    }]
+    bill:{
+        type:Number,
+        required:true,
+        default:0
+    },
+
+    timestamps: {
+        createdAt: 'created_at', 
+        updatedAt: 'updated_at' 
+    }
+
+
 
 })
 
