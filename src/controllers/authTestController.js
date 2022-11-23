@@ -3,7 +3,7 @@ const User = require('../models/userModel');
 
 var jwt = require('jsonwebtoken');
 var bcript = require('bcryptjs');
-const { response } = require('express');
+
 
 //register
 const createUser = (req,res) =>{
@@ -31,25 +31,30 @@ const Login = (req,res) =>{
     //Se o email exitir
     .then((user) =>{
         //Compara as senhas
-        bcript
-            .compare(request.body.password,user.password)
+        bcrypt
+        .compare(req.body.password, user.password)
 
             //Verifica se as senhas sao iguais
-            .then((passwordCheck) =>{
-                if(!passwordCheck){
-                    return response.status(400).send({message : "SENHAS DIFERETES",error,
-                    });
-                }
-                //criar token jwt
-                const token = jwt.sign({
-                    userId:user._id,
-                    userEmail:user.email,
-                },
-                "RANDOM-TOKEN",{expiresIn: "24hr"}
-                );
+        .then((passwordCheck) =>{
+            if(!passwordCheck){
+                return response.status(400).send({message : "SENHAS DIFERETES",error});
+            }
+            //criar token jwt
+            const token = jwt.sign({
+                userId:user._id,
+                userEmail:user.email,
+            },"RANDOM-TOKEN",{expiresIn: "24hr"});
 
-                response.status(400).send
+            response.status(200).send({message : "Login realizado com sucesso!",email:user.email,token});
             })
+
+            //Se as senhas nao forem iguais
+            .catch((error) => {
+                response.status(400).send({message : "SENHAS DIFERETES",error});
+            });
+    })
+    .catch((e) =>{
+        response.status(404).send({message:"E-mail nao encontrado",e});
     })
 
 }
