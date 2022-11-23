@@ -35,7 +35,7 @@ const TicketSchema = new mongoose.Schema({
     
     owner:{
         type: ObjectId,
-        required: true,
+        //required: true,
         ref: 'UserTest'
     },
 
