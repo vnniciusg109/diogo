@@ -43,11 +43,11 @@ const EventSchema = new mongoose.Schema({
         required:true
     },
     
-    evTicket :{
-        type: ObjectID,
+    //evTicket :{
+        //type: ObjectID,
         //required : true,
-        ref: 'Ticket'
-    },
+        //ref: 'Ticket'
+    //},
 
     },{timestamps:true}
 )
