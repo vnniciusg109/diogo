@@ -53,8 +53,8 @@ const Login = (req,res) =>{
                 response.status(400).send({message : "SENHAS DIFERETES",error});
             });
     })
-    .catch((e) =>{
-        response.status(404).send({message:"E-mail nao encontrado",e});
+    .catch((error) =>{
+        response.status(404).send({message : "E-mail nao encontraod",error});
     })
 
 }
