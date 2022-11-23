@@ -33,10 +33,10 @@ const TicketSchema = new mongoose.Schema({
         required: true,
     },
     
-    owner:{
+    tickEvent:{
         type: ObjectId,
         //required: true,
-        ref: 'UserTest'
+        ref: 'Event'
     },
 
     },{timestamps:true}
