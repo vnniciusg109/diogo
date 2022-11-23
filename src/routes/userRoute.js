@@ -14,3 +14,4 @@ router.post('/login',loginAccount)
 //Logout
 router.post('logout',Auth,logoutAccount)
 
+module.exports = router;
