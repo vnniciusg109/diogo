@@ -20,9 +20,14 @@ const getTicket = ((req, res) => {
 const createTicket = (async(req, res) => {
   try{
     const newTicket = new Ticket({
-      ...req.body,
+      tickName : req.body.tickName,
+      tickPrice :req.body.tickPrice,
+      tickLocal : req.body.tickLocal,
+      tickGender:req.body.tickGender,
+      tickYear:req.body.tickYear,
+      tickType:req.body.tickType,
       ownerTicket : req.user._id       
-    })
+  })
     await newTicket.save()
     res.status(201).send(newTicket)
   }catch(error){
