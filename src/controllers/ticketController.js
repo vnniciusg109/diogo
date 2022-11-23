@@ -20,8 +20,8 @@ const getTicket = ((req, res) => {
 
 const createTicket =  async(req, res) => {
   try {
-      const owner = await User.findById(req.user._id);
-      if(!owner)return res.status(400).send("invalid owner")
+      //const owner = await User.findById(req.user._id);
+      //if(!owner)return res.status(400).send("invalid owner")
       const newTicket = new Ticket({
         tickName: req.body.tickName,
         tickPrice: req.body.tickPrice ,
@@ -29,7 +29,7 @@ const createTicket =  async(req, res) => {
         tickGender: req.body.tickGender,
         tickYear:req.body.tickYear,
         tickType:req.body.tickType,
-        owner: req.user._id
+        //owner: req.user._id
       })
       await newTicket.save()
       res.status(201).send(newTicket)
