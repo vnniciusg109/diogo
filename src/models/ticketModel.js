@@ -26,24 +26,22 @@ const TicketSchema = new mongoose.Schema({
     tickYear: {
         type: String,
         required: true,
-     },
+    },
 
     tickType: {
         type: String,
         required: true,
-     },
+    },
     
     ownerTicket : {
         type: ObjectId,
         required: true,
         ref: 'User'
-     },
+    },
 
-    timestamps: {
-        createdAt: 'created_at', 
-        updatedAt: 'updated_at' 
-    }
-})
+    },{timestamps:true}
+)
+    
 
 
 const Ticket = mongoose.model("Ticket",TicketSchema);

@@ -49,13 +49,8 @@ const EventSchema = new mongoose.Schema({
         ref: 'Ticket'
     },
 
-
-    timestamps: {
-        createdAt: 'created_at', 
-        updatedAt: 'updated_at' 
-    }
-
-})
+    },{timestamps:true}
+)
 
 
 const Event = mongoose.model("Event",EventSchema);
