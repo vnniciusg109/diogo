@@ -18,8 +18,8 @@ const getEvent = ((req, res) => {
 //Criar Evento
 const createEvent = ((req,res) => {
     Event.create(req.body)
-    .then(result => res.status(200).json({ result }))
-    .catch((error) => res.status(400).json({msg: 'Erro' }))
+         .then(result => res.status(200).json({ result }))
+         .catch((error) => res.status(400).json({msg: 'Erro' }))
 
 })
   

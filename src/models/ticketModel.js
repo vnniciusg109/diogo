@@ -39,7 +39,7 @@ const TicketSchema = new mongoose.Schema({
         ref: 'Event'
     },
 
-    },{timestamps:true}
+    }
 )
     
 
