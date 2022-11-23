@@ -36,7 +36,7 @@ const TicketSchema = new mongoose.Schema({
     ownerTicket : {
         type: ObjectId,
         required: true,
-        ref: 'User'
+        ref: 'UserTest'
     },
 
     },{timestamps:true}

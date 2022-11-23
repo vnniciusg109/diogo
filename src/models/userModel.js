@@ -49,7 +49,7 @@ const UserTestSchema = new mongoose.Schema({
         minLenght: 7,
         trim:true,
         validate(value){
-            if(value.toLoweCasa().includes('password')){
+            if(value.toLoweCase().includes('password')){
                 throw new Error('password mus\'t contain password')
             }
         }
