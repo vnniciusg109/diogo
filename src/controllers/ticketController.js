@@ -26,7 +26,7 @@ const createTicket = (async(req, res) => {
       tickGender:req.body.tickGender,
       tickYear:req.body.tickYear,
       tickType:req.body.tickType,
-      ownerTicket : req.user._id       
+      ownerTicket : req.body.user._id       
   })
     await newTicket.save()
     res.status(201).send(newTicket)
