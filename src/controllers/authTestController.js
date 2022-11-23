@@ -9,7 +9,7 @@ var bcript = require('bcryptjs');
 const createUser = (req,res) =>{
     bcript
         .hash(reques.body.password,10)
-        .then((hashedPassword))
+        .then((hashedPassword) => {
 
             const user = new User({
                 username:req.body.username,
@@ -21,14 +21,15 @@ const createUser = (req,res) =>{
             });
 
             user.save()
-            
+
             .then((result) => {
                 res.status(201).send({message : "Usuario criado com sucesso",result})
             })
             .catch((error) => {
                 res.status(500).send({message : "Erro ao criar o usuario",error})
             })
-
+        })
+        
         .catch((e) =>{
             res.status(500).send({message : "Falha ao mascarar senha",e})
         })
