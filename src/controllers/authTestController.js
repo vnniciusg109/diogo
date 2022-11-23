@@ -39,10 +39,21 @@ const logoutAccount = async(req,res)=>{
 }
 
 
+const List = async(req,res)=> {
+    try{
+    const users = await User.find({});
+    return res.json(users);
+   }catch(err){
+    res.send(err);
+   }
+}
+
+
 
 module.exports = {
     createAccount,
     loginAccount,
     logoutAccount,
+    List
     
 }

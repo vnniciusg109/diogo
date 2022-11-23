@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const Auth = require('../middlewares/authTest');
-const {createAccount,loginAccount,logoutAccount} = require('../controllers/authTestController')
+const {createAccount,loginAccount,logoutAccount,List} = require('../controllers/authTestController')
 
 
 
@@ -12,6 +12,9 @@ router.post('/create-account',createAccount)
 router.post('/login',loginAccount)
 
 //Logout
-router.post('logout',Auth,logoutAccount)
+router.post('/logout',Auth,logoutAccount)
+
+//List
+router.get('/list',List)
 
 module.exports = router;
