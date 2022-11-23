@@ -8,7 +8,7 @@ var bcript = require('bcryptjs');
 //register
 const createUser = (req,res) =>{
     bcript
-        .hash(reques.body.password,10)
+        .hash(req.body.password,10)
         .then((hashedPassword) => {
 
             const user = new User({
