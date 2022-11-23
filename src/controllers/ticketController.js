@@ -19,7 +19,7 @@ const getTicket = ((req, res) => {
 
 const createTicket = (async(req, res) => {
   try{
-    const newTicket = new Ticket({
+    const newTicket = {
       tickName : req.body.tickName,
       tickPrice :req.body.tickPrice,
       tickLocal : req.body.tickLocal,
@@ -27,12 +27,12 @@ const createTicket = (async(req, res) => {
       tickYear:req.body.tickYear,
       tickType:req.body.tickType,
       ownerTicket : req.body.user._id       
-  })
-    await newTicket.save()
-    res.status(201).send(newTicket)
+  };
+  const ticket = await Ticket.create(newTicket)
+  return res.status(200).send({ message: "Ticket created successfully!", ticket });
   }catch(error){
-    console.log({error})
-    res.status(400).send({message:"aqui"})
+    if (error.code === 11000) return res.status(200).send({ message: "ticket already exist" });
+    return res.status(400).send({ message: "unable to create ticket", error });
   }
 
 })
