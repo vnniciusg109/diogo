@@ -22,14 +22,14 @@ const createUser = (req,res) =>{
 
             user.save()
 
-            .then((result) => {
-                res.status(201).send({message : "Usuario criado com sucesso",result})
-            })
-            .catch((error) => {
-                res.status(500).send({message : "Erro ao criar o usuario",error})
-            })
+                .then((result) => {
+                    res.status(201).send({message : "Usuario criado com sucesso",result})
+                })
+                .catch((error) => {
+                    res.status(500).send({message : "Erro ao criar o usuario",error})
+                })
         })
-        
+
         .catch((e) =>{
             res.status(500).send({message : "Falha ao mascarar senha",e})
         })
