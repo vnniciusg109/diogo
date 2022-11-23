@@ -15,22 +15,21 @@ const getEvent = ((req, res) => {
         .catch(() => res.status(404).json({msg: 'Event not found'}))
 })
 
-//Criar um evento
+//Criar Evento
 const createEvent =  async(req, res) => {
     try {
+
         const newEvent = new Event({
-          
-          evName: req.body.evName,
-          evState: req.body.evState ,
-          evLocal : req.body.evLocal,
-          evDate: req.body.evDate,
-          evYear:req.body.evYear,
-          evType:req.body.evType,
-          evOverview:req.body.evOverview,
-         //evTicket: req.ticket._id
-
+            
+            evName: req.body.evName,
+            evState: req.body.evState ,
+            evLocal : req.body.evLocal,
+            evDate: req.body.evDate,
+            evYear:req.body.evYear,
+            evType:req.body.evType,
+            evOverview:req.body.evOverview
+     
         })
-
         await newEvent.save()
         res.status(201).send(newEvent)
     } catch (error) {
@@ -38,6 +37,7 @@ const createEvent =  async(req, res) => {
         res.status(400).send({message: "error"})
     }
   }
+  
   
 
 //Atualizar dados de um E vento

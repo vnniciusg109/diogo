@@ -1,5 +1,4 @@
 const Ticket = require('../models/ticketModel');
-const User = require('../models/userModel')
 
 
 //Listar todos ingressos

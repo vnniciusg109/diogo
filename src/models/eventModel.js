@@ -5,9 +5,9 @@ const ObjectID = mongoose.Schema.Types.ObjectId
 
 const EventSchema = new mongoose.Schema({
    
-    //evFile:{
-        //type: String,
-    //},
+    evFile:{
+        type: String,
+    },
 
     evName:{
         type:String , 
@@ -21,7 +21,7 @@ const EventSchema = new mongoose.Schema({
 
     evLocal:{
         type:String,
-         required:true
+        required:true
     },
     
     evDate:{
@@ -44,11 +44,11 @@ const EventSchema = new mongoose.Schema({
         required:true
     },
     
-    //evTicket :{
-        //type: ObjectID,
+    evTicket :{
+        type: ObjectID,
         //required : true,
-        //ref: 'Ticket'
-    //},
+        ref: 'Ticket'
+    },
 
     },{timestamps:true}
 )
