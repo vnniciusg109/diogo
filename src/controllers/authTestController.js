@@ -1,4 +1,4 @@
-const User = require("../models/userTest");
+const User = require("../models/userModel");
 
 //Criar Conta
 const createAccount = async(req,res) =>{
