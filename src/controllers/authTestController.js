@@ -7,20 +7,31 @@ var bcript = require('bcryptjs');
 
 //register
 const createUser = (req,res) =>{
-    const user = new User({
-        username:req.body.username,
-        lastname : req.body.lastname,
-        cpf:req.body.cpf,
-        pnumber:req.body.pnumber,
-        email:req.body.email,
-        password:bcript.hashSync(req.body.password,8),
-    });
-    user.save((err,user) => {
-        if(err){
-            res.status(500).send({message:err});
-            return;
-        }
-    })
+    bcript
+        .hash(reques.body.password,10)
+        .then((hashedPassword))
+
+            const user = new User({
+                username:req.body.username,
+                lastname : req.body.lastname,
+                cpf:req.body.cpf,
+                pnumber:req.body.pnumber,
+                email:req.body.email,
+                password:hashedPassword,
+            });
+
+            user.save()
+            
+            .then((result) => {
+                res.status(201).send({message : "Usuario criado com sucesso",result})
+            })
+            .catch((error) => {
+                res.status(500).send({message : "Erro ao criar o usuario",error})
+            })
+
+        .catch((e) =>{
+            res.status(500).send({message : "Falha ao mascarar senha",e})
+        })
 }
 
 //login
