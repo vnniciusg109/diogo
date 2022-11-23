@@ -26,7 +26,7 @@ const createTicket = (async(req, res) => {
       tickGender:req.body.tickGender,
       tickYear:req.body.tickYear,
       tickType:req.body.tickType,
-      ownerTicket : req.body.user._id       
+      ownerTicket : req.body.userId       
   };
   const ticket = await Ticket.create(newTicket)
   return res.status(200).send({ message: "Ticket created successfully!", ticket });
