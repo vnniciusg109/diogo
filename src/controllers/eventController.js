@@ -21,7 +21,7 @@ const createEvent =  async(req, res) => {
 
         const newEvent = new Event({
 
-            evFile:req.body.evFile,
+            //evFile:req.body.evFile,
             evName: req.body.evName,
             evState: req.body.evState ,
             evLocal : req.body.evLocal,
@@ -29,6 +29,7 @@ const createEvent =  async(req, res) => {
             evYear:req.body.evYear,
             evType:req.body.evType,
             evOverview:req.body.evOverview
+            
      
         })
         await newEvent.save()
