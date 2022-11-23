@@ -3,9 +3,6 @@ const User = require('../models/userModel');
 var jwt = require('jsonwebtoken');
 var bcript = require('bcryptjs');
 
-
-
-
 //register
 const createUser = (req,res) =>{
     bcript
