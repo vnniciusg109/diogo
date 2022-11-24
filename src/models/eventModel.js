@@ -1,7 +1,7 @@
 const mongoose = require ('mongoose');
-const ObjectID = mongoose.Schema.Types.ObjectId
+const Schema = mongoose.Schema;
 
-const EventSchema = new mongoose.Schema({
+const EventSchema = new Schema({
     
     evFile :{
         type:String,
@@ -20,11 +20,11 @@ const EventSchema = new mongoose.Schema({
         required:true
     },
     evDate:{
-        type:String,
+        type:Date,
         required:true
     },
     evYear:{
-        type:String,
+        type:Number,
         required:true
     },
     evType:{
@@ -37,13 +37,25 @@ const EventSchema = new mongoose.Schema({
     },
 
     evPromoter:[{
-        type:ObjectID,
-        //required:true,
-        ref : "User"
+        userId:{
+            type:String,
+        },
+        name:String,
+        type:String,
+        //required:true
     }],
+
+    evTicket :[{
+        ticketId:{
+            type:String,
+        },
+        nameTick:String,
+        priceTick:Number,
+        //required:true
+    }]
+    
 },{timestamps:true}
 )
 
-const Event = mongoose.model("Event",EventSchema);
 
-module.exports = Event
+module.exports = Event = mongoose.model("Event",EventSchema);

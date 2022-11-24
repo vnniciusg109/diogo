@@ -1,5 +1,6 @@
-const Event = require('../models/eventModel')
-
+const Event = require('../models/eventModel');
+const Ticket = require('../models/ticketModel');
+const User = require('../models/user');
 
 //Listar todos os Eventos
 const getEvents = ((req, res) => {
