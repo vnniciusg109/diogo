@@ -36,13 +36,25 @@ const EventSchema = new Schema({
         required:true
     },
 
-    //evPromoter:[{
-        //type:ObjectID,
-        //required:true,
-       // ref : "User"
-   // }],
+    evPromoter:[{
+        userId:{
+            type:String,
+        },
+        name:String,
+        type:String,
+        //required:true
+    }],
+
+    evTicket :[{
+        ticketId:{
+            type:String,
+        },
+        nameTick:String,
+        priceTick:Number,
+        //required:true
+    }]
+    
 },{timestamps:true}
 )
 
-
-module.exports = Event
+module.exports = Event = mongoose.model("Event",EventSchema);
