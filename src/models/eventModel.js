@@ -36,11 +36,11 @@ const EventSchema = new mongoose.Schema({
         required:true
     },
 
-    evPromoter:[{
-        type:ObjectID,
+    //evPromoter:[{
+        //type:ObjectID,
         //required:true,
-        ref : "User"
-    }],
+       // ref : "User"
+   // }],
 },{timestamps:true}
 )
 
