@@ -56,14 +56,6 @@ router.post('/authenticate', async (req, res) => {
 module.exports = app => app.use('/auth', router)
 
 
-router.get('/list', async(req,res)=> {
-  try{
-  const users = await User.find({});
-  return res.json(users);
- }catch(err){
-  res.send(err);
- }
-})
 
 router.delete('delete', async(req,res)=>{
   const user = await User.deleteOne({_id: req.params.id})
