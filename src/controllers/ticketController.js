@@ -17,19 +17,19 @@ const getTicket = ((req, res) => {
 
 //Criar Ingresso
 
-module.exports.createTicket =(req,res) =>{
+const createTicket = (req,res) => {
   const newTicket = new Ticket(req.body);
-  newTicket.save().then(ticket => res.json(ticket))
+  newTicket.save()
+           .then(ticket => res.json(ticket))
 }
 
+
 //Atualizar Ingresso
-module.exports.updateTicket = (req,res) => {
-  Ticket.findByIdAndUpdate({_id: req.params.id},req.body).then(function(ticket){
-    Ticket.findOne({_id: req.params.id}).then(function(ticket){
-          res.json(ticket);
-      });
-  });
-}
+const updateTicket = ((req, res) => {
+  Ticket.findOneAndUpdate({ _id: req.params.ticketID }, req.body, { new: true, runValidators: true })
+      .then(result => res.status(200).json({ result }))
+      .catch((error) => res.status(404).json({msg: 'Ticket not found' }))
+})
 
 
 //Deletar Ingresso
@@ -44,5 +44,7 @@ const deleteTicket = ((req, res) => {
 module.exports = {
   getTickets,
   getTicket,
+  createTicket,
+  updateTicket,
   deleteTicket,
 }

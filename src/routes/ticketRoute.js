@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
-const {getTicket,getTickets,createTicket,updateTicket,deleteTicket,searchTicket} = require('../controllers/ticketController')
+const {getTicket,getTickets,createTicket,updateTicket,deleteTicket} = require('../controllers/ticketController')
 
 
 
