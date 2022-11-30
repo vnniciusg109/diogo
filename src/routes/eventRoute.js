@@ -1,8 +1,6 @@
 const express = require('express')
 const router = express.Router()
-
-const {getEvent,getEvents,createEvent,updateEvent,deleteEvent, searchEvent} = require('../controllers/eventController')
-
+const {getEvent,getEvents,createEvent,updateEvent,deleteEvent} = require('../controllers/eventController')
 
 
 //Ver todos eventos
@@ -21,6 +19,6 @@ router.put('/:eventID',updateEvent)
 router.delete('/:eventID',deleteEvent)
 
 //Buscar Evento
-router.get('/search/:evNameiID',searchEvent)
+//router.get('/search/:evNameiID',searchEvent)
 
 module.exports = router

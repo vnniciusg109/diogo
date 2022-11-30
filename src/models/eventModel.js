@@ -1,60 +1,60 @@
-const mongoose = require ('mongoose')
-const ObjectID = mongoose.Schema.Types.ObjectId
+const mongoose = require ('mongoose');
+const Schema = mongoose.Schema;
 
-
-const EventSchema = new mongoose.Schema({
-   
-    evFile:{
-        type: String,
+const EventSchema = new Schema({
+    
+    evFile :{
+        type:String,
     },
 
     evName:{
-        type:String , 
-        required: true
+        type:String,
+        required:true,
     },
-
     evState:{
-        type:String
-        ,required:true
+        type:String,
+        required:true,
     },
-
     evLocal:{
         type:String,
-         required:true
+        required:true
     },
-    
     evDate:{
-        type:String,
-         required:true
+        type:Date,
+        required:true
     },
-
     evYear:{
-        type:String,
-         required:true
+        type:Number,
+        required:true
     },
-
     evType:{
         type:String,
-         required:true
+        required:true
     },
-
     evOverview:{
         type:String,
         required:true
     },
-    
-    evTicket :{
-        type: ObjectID,
-        required : true,
-        ref: 'Ticket'
-    },
 
-    },{timestamps:true}
+    evPromoter:[{
+        userId:{
+            type:String,
+        },
+        name:String,
+        type:String,
+        //required:true
+    }],
+
+    evTicket :[{
+        ticketId:{
+            type:String,
+        },
+        nameTick:String,
+        priceTick:Number,
+        //required:true
+    }]
+    
+},{timestamps:true}
 )
 
-
-const Event = mongoose.model("Event",EventSchema);
-
-module.exports = Event;
-
-
+module.exports = Event = mongoose.model("Event",EventSchema);

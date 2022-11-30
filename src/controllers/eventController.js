@@ -1,5 +1,6 @@
-const Event = require('../models/eventModel')
-
+const Event = require('../models/eventModel');
+const Ticket = require('../models/ticketModel');
+const User = require('../models/user');
 
 //Listar todos os Eventos
 const getEvents = ((req, res) => {
@@ -15,12 +16,14 @@ const getEvent = ((req, res) => {
         .catch(() => res.status(404).json({msg: 'Event not found'}))
 })
 
-//Criar um evento
-const createEvent = ((req, res) => {
+//Criar Evento
+const createEvent = ((req,res) => {
     Event.create(req.body)
         .then(result => res.status(200).json({ result }))
-        .catch((error) => res.status(500).json({msg:  error }))
+        .catch((error) => res.status(400).json({msg: 'Erro' }))
+
 })
+  
 
 //Atualizar dados de um E vento
 const updateEvent = ((req, res) => {
@@ -37,11 +40,11 @@ const deleteEvent = ((req, res) => {
 })
 
 //Buscar Ticket
-const searchEvent = ((req, res) => {
-    Event.findOne({ evName: req.params.evNameID })
-        .then(result => res.status(200).json({ result }))
-        .catch(() => res.status(404).json({msg: 'Event not found'}))
-})
+//const searchEvent = ((req, res) => {
+    //Event.findOne({ evName: req.params.evNameID })
+        //.then(result => res.status(200).json({ result }))
+        //.catch(() => res.status(404).json({msg: 'Event not found'}))
+//})
 
 module.exports = {
     getEvents,
@@ -49,5 +52,5 @@ module.exports = {
     createEvent,
     updateEvent,
     deleteEvent,
-    searchEvent
+
 }
