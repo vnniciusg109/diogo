@@ -36,7 +36,7 @@ const login = async(req,res) =>{
     if(!email || !password){
         throw new CustomError.BadRequestError('Insira um e-mail e uma senha!');
     }
-    const user = await User.findOne({email});
+    const user = await User.findOne({email}).select('+password');
     if(!user){
         throw new CustomError.NotFoundError('Nao foi encontrado um usuario com esse email!');
     }
