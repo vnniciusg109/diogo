@@ -1,7 +1,7 @@
 const mongoose = require('../database')
 const bcrypt = require('bcryptjs')
 
-const UserSchema = new mongoose.Schema({
+const UserTestSchema = new mongoose.Schema({
     username: {
         type: String,
         require : true,
@@ -49,6 +49,6 @@ UserSchema.pre('save', async function(next){
     next()
 })
 
-const User = mongoose.model('User', UserSchema)
+const UserTeste = mongoose.model('UserTeste', UserTestSchema)
 
-module.exports = User
+module.exports = UserTeste

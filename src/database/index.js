@@ -1,8 +1,9 @@
 //db.js
 
 const mongoose = require('mongoose')
+require('dotenv').config()
 
-const url = `mongodb+srv://Vnn:ubLU7iPUqnkGPEK@cluster0.bqwrzci.mongodb.net/?retryWrites=true&w=majority`;
+const url = process.env.MONGO_URL;
 
 const connectionParams={
     useNewUrlParser: true,

@@ -1,26 +1,21 @@
 const express = require('express')
 const router = express.Router()
+const {getEvent,getEvents,createEvent,updateEvent,deleteEvent} = require('../controllers/eventController')
+const {authenticateUser,authorizePermissions} = require('../middlewares/authentication');
+const {getSingleEventTicket} = require('../controllers/ticketController')
 
-const {getEvent,getEvents,createEvent,updateEvent,deleteEvent, searchEvent} = require('../controllers/eventController')
+router.route('/')
+      .post(authenticateUser,authorizePermissions('event',createEvent))
+      .get(getEvents)
+      
+router.route('/:id')
+      .get(getEvent)
+      .patch(authenticateUser,authorizePermissions('event'),updateEvent)
+      .delete(authenticateUser,authorizePermissions('event'),deleteEvent)
 
+router.route('/:id/tickets')
+      .get(getSingleEventTicket)
 
-
-//Ver todos eventos
-router.get('/',getEvents)
-
-//Filtrar por ID
-router.get('/:eventID',getEvent)
-
-//Criar Evento
-router.post('/create',createEvent)
-
-//Atualizar Evento
-router.put('/:eventID',updateEvent)
-
-//Deletar Evento
-router.delete('/:eventID',deleteEvent)
-
-//Buscar Evento
-router.get('/search/:evNameiID',searchEvent)
+      
 
 module.exports = router

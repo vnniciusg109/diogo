@@ -1,6 +1,7 @@
-const mongoose = require ('../database')
+const mongoose = require ('mongoose');
+const Schema = mongoose.Schema
 
-const TicketSchema = new mongoose.Schema({
+const TicketSchema = new Schema({
 
     tickName :{
          type : String , 
@@ -8,7 +9,7 @@ const TicketSchema = new mongoose.Schema({
     },
 
     tickPrice:{ 
-        type : String, 
+        type : Number, 
         required : true
     },
 
@@ -17,32 +18,29 @@ const TicketSchema = new mongoose.Schema({
         required : true
     },
 
+
     tickGender  : {
         type : String,  
         required : true
     },
 
     tickYear: {
-        type: String,
+        type: Number,
         required: true,
-     },
+    },
 
     tickType: {
         type: String,
         required: true,
-     },
-    
-    //tickVendor :[{
-        //type:mongoose.Schema.Types.ObjectId ,  ref : "User"
-    //}],
-
-    created_at : {
-        type : Date,
-        default : Date.now
     },
-})
 
+    event:[{
+        type:Schema.Types.ObjectId,
+        ref:"Event"
+    }]
 
-const Ticket = mongoose.model("Ticket",TicketSchema);
+    },{timestamps:true}
+)
 
-module.exports = Ticket
+module.exports = Ticket = mongoose.model("Ticket",TicketSchema);
+

@@ -1,61 +1,64 @@
-const mongoose = require ("../database")
+const mongoose = require ('mongoose');
+const Schema = mongoose.Schema;
 
-
-const EventSchema = new mongoose.Schema({
-   
-    evFile:{
-        type: String,
+const EventSchema = new Schema({
+    
+    evFile :{
+        type:String,
     },
 
     evName:{
-        type:String , 
-        required: true
-    },
-
-    evState:{
-        type:String
-        ,required:true
-    },
-
-    evLocal:{
         type:String,
-         required:true
+        required:true,
+    },
+    evCategory:{
+        type:String,
     },
     
+    evState:{
+        type:String,
+        required:true,
+    },
+    evLocal:{
+        type:String,
+        required:true
+    },
     evDate:{
-        type:String,
-         required:true
+        type:Date,
+        required:true
     },
-
     evYear:{
-        type:String,
-         required:true
+        type:Number,
+        required:true
     },
-
     evType:{
         type:String,
-         required:true
+        required:true
     },
-
     evOverview:{
         type:String,
-         required:true
+        required:true
     },
 
-    //evTicket :[{
-        //type: mongoose.Schema.Types.ObjectId , ref : "Ticket"
-    //}],
+    promoter:[{
+        type : Schema.Types.ObjectId,
+        ref : 'User',
+        //required:true
+    }],
+    
+},{
+    timestamps:true,toJSON:{virtuals:true},toObject:{virtuals:true}
+});
 
-    created_at : {
-        type : Date,
-        default : Date.now
-    },
-
+EventSchema.virtual('tickets',{
+    ref:'Ticket',
+    localField:'_id',
+    foreignField:'event',
+    justOne:false,
 })
 
+EventSchema.pre('remove', async function(next){
+    await this.model('Event').deleteMany({event:this._id});
+})
 
-const Event = mongoose.model("Event",EventSchema);
-
-module.exports = Event;
-
-
+module.exports = mongoose.model("Event",EventSchema);
