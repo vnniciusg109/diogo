@@ -19,7 +19,6 @@ const ticket_route = require('./src/routes/ticketRoute');
 
 app.use('/api/event',event_route);
 app.use('/api/ticket',ticket_route);
-app.use('/api/user',user_route);
 //app.use('/api/cart,cart_route);
 
 
