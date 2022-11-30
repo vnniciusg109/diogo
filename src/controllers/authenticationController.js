@@ -8,9 +8,17 @@ const {attachCookiesToResponse,createTokenUser} = require('../utils');
 const register = async(req,res) =>{
     const{username,lastname,cpf,pnumber,email,password} = req.body;
 
-    const emailExist = await User.findOne({email,cpf,pnumber});
+    const emailExist = await User.findOne({email});
     if (emailExist) {
-        throw new CustomError.BadRequestError('Dados ja utilizado');
+        throw new CustomError.BadRequestError('Email ja utilizado');
+    }
+    const cpfExist = await User.findOne({cpf});
+    if (cpfExist) {
+        throw new CustomError.BadRequestError('Cpf ja utilizado');
+    }
+    const pnumberExist = await User.findOne({pnumber});
+    if (pnumberExist) {
+        throw new CustomError.BadRequestError('Numero ja utilizado');
     }
 
     const isFirstAccount = (await User.countDocuments({})) === 0;
