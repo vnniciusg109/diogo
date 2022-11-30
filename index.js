@@ -27,8 +27,8 @@ app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 app.use(cookieParser(process.env.JWT_SECRET));
 app.use(express.static(path.join(__dirname,'public')))
-app.use(errorHandlerMiddleware);
-app.use(notFoundMiddleware);
+//app.use(errorHandlerMiddleware);
+//app.use(notFoundMiddleware);
 
 app.use('/api/event',event_route);
 app.use('/api/ticket',ticket_route);
