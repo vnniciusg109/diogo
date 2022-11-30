@@ -1,50 +1,61 @@
 const Event = require('../models/eventModel');
-const Ticket = require('../models/ticketModel');
-const User = require('../models/user');
+const {StatusCodes} = require('http-status-codes');
 
-//Listar todos os Eventos
-const getEvents = ((req, res) => {
-    Event.find({})
-        .then(result => res.status(200).json({ result }))
-        .catch(error => res.status(500).json({msg: error}))
-})
-
-//Buscar um Evento em especifico
-const getEvent = ((req, res) => {
-    Event.findOne({ _id: req.params.eventID })
-        .then(result => res.status(200).json({ result }))
-        .catch(() => res.status(404).json({msg: 'Event not found'}))
-})
 
 //Criar Evento
-const createEvent = ((req,res) => {
-    Event.create(req.body)
-        .then(result => res.status(200).json({ result }))
-        .catch((error) => res.status(400).json({msg: 'Erro' }))
+const createEvent = async(req,res) =>{
+    req.body.evPromoter = req.user.userId;
+    req.body.evTicket = req.ticket.ticketId;
+    const event = await Event.create(req.body);
+    res.status(StatusCodes.CREATED).json({event});
+}
 
-})
-  
+//Listar todos os eventos
 
-//Atualizar dados de um E vento
-const updateEvent = ((req, res) => {
-    Event.findOneAndUpdate({ _id: req.params.eventID }, req.body, { new: true, runValidators: true })
-        .then(result => res.status(200).json({ result }))
-        .catch((error) => res.status(404).json({msg: 'Event not found' }))
-})
+const getEvents = async(req,res) =>{
+    const events = await Event.find( { } );
+    res.status(StatusCodes.OK).json({events, count:events.length});
 
-//Deletar um Evento
-const deleteEvent = ((req, res) => {
-    Event.findOneAndDelete({ _id: req.params.eventID })
-        .then(result => res.status(200).json({ result }))
-        .catch((error) => res.status(404).json({msg: 'Event not found' }))
-})
+}
 
-//Buscar Ticket
-//const searchEvent = ((req, res) => {
-    //Event.findOne({ evName: req.params.evNameID })
-        //.then(result => res.status(200).json({ result }))
-        //.catch(() => res.status(404).json({msg: 'Event not found'}))
-//})
+//Listar evento em especifico
+const getEvent = async(req,res) =>{
+    const event  = await Event.findOne({_id:req.params.id}).populate('tickets');
+    
+    if(!event){
+        res.status(200).json({msg:"Nenhum evento encontrado!"})
+    }
+
+    res.status(StatusCodes.OK).json({ticket})
+
+
+}
+
+
+//Atualizar evento
+const updateEvent = async(req,res) =>{
+    const event = await Event.findOneAndUpdate({_id: req.params.id}, req.body{
+        new:true,
+        runValidators:true,
+    });
+    if(!event){
+        res.status(200).json({msg:"Nenhum evento encontrado!"})
+    }
+    res.status(StatusCodes.OK).json({ticket})
+
+}
+
+//Deletar Evento
+const deleteEvent = async(req,res) =>{
+    const event = await Event.findOne({_id: req.params.id});
+    if(!event){
+        res.status(200).json({msg:"Nenhum evento encontrado!"})
+    }
+    await event.remove();
+    res.status(StatusCodes.OK).json({msg: "Evento deletado com sucesso!"})
+
+
+}
 
 module.exports = {
     getEvents,

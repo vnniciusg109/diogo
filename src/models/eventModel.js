@@ -37,20 +37,14 @@ const EventSchema = new Schema({
     },
 
     evPromoter:[{
-        userId:{
-            type:String,
-        },
-        name:String,
-        type:String,
+        type : Schema.Types.ObjectId,
+        ref : 'User',
         //required:true
     }],
 
     evTicket :[{
-        ticketId:{
-            type:String,
-        },
-        nameTick:String,
-        priceTick:Number,
+        type : Schema.Types.ObjectId,
+        ref: 'Ticket',
         //required:true
     }]
     
