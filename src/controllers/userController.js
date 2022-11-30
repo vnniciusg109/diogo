@@ -2,7 +2,6 @@ const User = require('../models/userModel');
 const {StatusCodes} = require('http-status-codes');
 const CustomError = require('../errors');
 const {attachCookiesToResponse,createTokenUser,checkPermission}  = require('../utils');
-const User = require('../models/user');
 
 //Mostrar todos os usuarios com a role user
 const gettAllUsers = async(req,res) =>{
