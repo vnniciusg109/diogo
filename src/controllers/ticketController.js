@@ -17,11 +17,11 @@ const getTicket = ((req, res) => {
 
 //Criar Ingresso
 
-const createTicket = (req,res) => {
+const createTicket = ((req,res) => {
   const newTicket = new Ticket(req.body);
   newTicket.save()
            .then(ticket => res.json(ticket))
-}
+})
 
 
 //Atualizar Ingresso

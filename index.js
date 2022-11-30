@@ -15,7 +15,6 @@ app.use(express.static(__dirname))
 //API routes
 const event_route = require('./src/routes/eventRoute');
 const ticket_route = require('./src/routes/ticketRoute');
-const user_route = require('./src/routes/userRoute');
 //const cart_route = require('./src/routes/cartRoute');
 
 app.use('/api/event',event_route);
