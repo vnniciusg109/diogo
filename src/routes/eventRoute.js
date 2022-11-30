@@ -4,6 +4,7 @@ const {getEvent,getEvents,createEvent,updateEvent,deleteEvent} = require('../con
 const {authenticateUser,authorizePermissions} = require('../middlewares/authentication');
 const {getSingleEventTicket} = require('../controllers/ticketController')
 
+
 router.route('/')
       .post(authenticateUser,authorizePermissions('event',createEvent))
       .get(getEvents)
