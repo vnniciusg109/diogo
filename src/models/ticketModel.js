@@ -34,11 +34,10 @@ const TicketSchema = new Schema({
         required: true,
     },
 
-    event:{
+    event:[{
         type:Schema.Types.ObjectId,
         ref:"Event"
-    }
-
+    }]
 
     },{timestamps:true}
 )
