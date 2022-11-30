@@ -34,7 +34,7 @@ const getEvent = async(req,res) =>{
 
 //Atualizar evento
 const updateEvent = async(req,res) =>{
-    const event = await Event.findOneAndUpdate({_id: req.params.id}, req.body{
+    const event = await Event.findOneAndUpdate({_id: req.params.id}, req.body,{
         new:true,
         runValidators:true,
     });
