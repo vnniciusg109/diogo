@@ -6,8 +6,8 @@ const cors = require('cors');
 
 
 //middleware
-const errorHandlerMiddleware = require('./src/middlewares/error-handler');
-const notFoundMiddleware = require('./src/middlewares/not-found');
+//const errorHandlerMiddleware = require('./src/middlewares/error-handler');
+//const notFoundMiddleware = require('./src/middlewares/not-found');
 
 //API routes
 const event_route = require('./src/routes/eventRoute');
