@@ -11,6 +11,10 @@ const EventSchema = new Schema({
         type:String,
         required:true,
     },
+    evCategory:{
+        type:String,
+    },
+    
     evState:{
         type:String,
         required:true,
@@ -36,19 +40,25 @@ const EventSchema = new Schema({
         required:true
     },
 
-    evPromoter:[{
+    promoter:[{
         type : Schema.Types.ObjectId,
         ref : 'User',
         //required:true
     }],
-
-    evTicket :[{
-        type : Schema.Types.ObjectId,
-        ref: 'Ticket',
-        //required:true
-    }]
     
-},{timestamps:true}
-)
+},{
+    timestamps:true,toJSON:{virtuals:true},toObject:{virtuals:true}
+});
 
-module.exports = Event = mongoose.model("Event",EventSchema);
+EventSchema.virtual('tickets',{
+    ref:'Ticket',
+    localField:'_id',
+    foreignField:'event',
+    justOne:false,
+})
+
+EventSchema.pre('remove', async function(next){
+    await this.model('Event').deleteMany({event:this._id});
+})
+
+module.exports = mongoose.model("Event",EventSchema);

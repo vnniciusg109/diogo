@@ -1,11 +1,11 @@
 const Event = require('../models/eventModel');
 const {StatusCodes} = require('http-status-codes');
-
+const CustomError = require('../errors');
+const path = require('path');
 
 //Criar Evento
 const createEvent = async(req,res) =>{
-    req.body.evPromoter = req.user.userId;
-    req.body.evTicket = req.ticket.ticketId;
+    req.body.promoter = req.user.userId;
     const event = await Event.create(req.body);
     res.status(StatusCodes.CREATED).json({event});
 }
@@ -15,22 +15,16 @@ const createEvent = async(req,res) =>{
 const getEvents = async(req,res) =>{
     const events = await Event.find( { } );
     res.status(StatusCodes.OK).json({events, count:events.length});
-
 }
 
 //Listar evento em especifico
 const getEvent = async(req,res) =>{
     const event  = await Event.findOne({_id:req.params.id}).populate('tickets');
-    
     if(!event){
-        res.status(200).json({msg:"Nenhum evento encontrado!"})
+        throw new CustomError.NotFoundError(`Nao ha eventos com o id: ${req.params.id}`);
     }
-
-    res.status(StatusCodes.OK).json({ticket})
-
-
+    res.status(StatusCodes.OK).json({event})
 }
-
 
 //Atualizar evento
 const updateEvent = async(req,res) =>{
@@ -39,23 +33,23 @@ const updateEvent = async(req,res) =>{
         runValidators:true,
     });
     if(!event){
-        res.status(200).json({msg:"Nenhum evento encontrado!"})
+        throw new CustomError.NotFoundError(`Nao ha eventos com o id: ${req.params.id}`)
     }
-    res.status(StatusCodes.OK).json({ticket})
-
+    res.status(StatusCodes.OK).json({event});
 }
 
 //Deletar Evento
 const deleteEvent = async(req,res) =>{
-    const event = await Event.findOne({_id: req.params.id});
+    const {id:eventId} = req.params;
+    const event = await  Event.findOne({_id:eventId});
     if(!event){
-        res.status(200).json({msg:"Nenhum evento encontrado!"})
+      throw new CustomError.NotFoundError(`Nao ha eventos com o id: ${req.params.id}`);
     }
     await event.remove();
-    res.status(StatusCodes.OK).json({msg: "Evento deletado com sucesso!"})
+    res.status(StatusCodes.OK).json({msg: "Ingresso Removido com sucesso!"})
+  
+  }
 
-
-}
 
 module.exports = {
     getEvents,

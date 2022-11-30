@@ -18,6 +18,7 @@ const TicketSchema = new Schema({
         required : true
     },
 
+
     tickGender  : {
         type : String,  
         required : true
@@ -32,7 +33,13 @@ const TicketSchema = new Schema({
         type: String,
         required: true,
     },
-    
+
+    event:{
+        type:Schema.Types.ObjectId,
+        ref:"Event"
+    }
+
+
     },{timestamps:true}
 )
 

@@ -8,17 +8,7 @@ const cartSchema = new Schema ({
     },
 
     tickets :[{
-        ticketId:{
-            type:String,
-        },
-        name:String,
-        quantity:{
-            type:Number,
-            required:true,
-            min:[1,'A quantidade nao pode ser menor que 1.'],
-            default:1
-        },
-        price:Number,
+       type
     }],
     bill:{
         type:Number,

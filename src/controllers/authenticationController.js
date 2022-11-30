@@ -58,7 +58,7 @@ const logout = async(req,res) =>{
         httpOnly:true,
         expires: new Date(Date.now() + 1000)
     });
-    res.status(StatusCodes.OK).json({msg:"Usuario criado com sucesso!"})
+    res.status(StatusCodes.OK).json({msg:"Usuario deslogado com sucesso!"})
 }
 
 module.exports = {
