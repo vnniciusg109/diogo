@@ -14,16 +14,16 @@ const createJWT = ({payload}) =>{
 
 
 
-const createTokenUser = (user) =>{
+const createTokenUser = (res,user) =>{
 
     const token = createJWT({payload:user});
-    return{
+    res.send({
         name:user.name,
         userId: user._id,
         role:user.role,
         token:token
         
-    };
+});
 };
 
 module.exports = createTokenUser;
