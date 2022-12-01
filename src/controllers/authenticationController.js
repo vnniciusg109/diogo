@@ -24,9 +24,7 @@ const register = async(req,res) =>{
     const isFirstAccount = (await User.countDocuments({})) === 0;
     const role = isFirstAccount ? 'user':'event';
     const user = await User.create({username,lastname,cpf,pnumber,email,password,role});
-    const userToken = createTokenUser(user);
-    attachCookiesToResponse({res,user:userToken});
-    res.status(StatusCodes.CREATED).json({user})
+    res.status(StatusCodes.CREATED).json({user,token : createTokenUser({user})})
 
 }
 
