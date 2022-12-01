@@ -1,46 +1,60 @@
 const User = require('../models/userModel');
-const {StatusCodes} = require('http-status-codes');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const {JWT_SECRET = "jwt_secret"} = process.env
+
+require('dotenv').config()
+
+const JWT_SECRET = process.env.JWT_SECRET
+
+function generateToken(params = {}){
+    return jwt.sign(params,JWT_SECRET,{
+        expiresIn:8000,
+    });
+}
 
 
 
 //Registrar Usuario
 const register = async(req,res) =>{
-    var newUser = new User(req.body);
-    newUser.password = bcrypt.hashSync(req.body.password,10);
-    newUser.save(function(err,user){
-        if(err){
-            return res.status(404).send({message:err})
-        }else{
-            user.password = undefined;
-            return res.json(user);
+    const{username,lastname,cpf,pnumber,email,password} = req.body;
+    try{
+        if(await User.findOne({email})){
+            return res.status(400).send({error:"Email ja utilizado"})
         }
-    })
+        if(await User.findOne({cpf})){
+            return res.status(400).send({error:"Cpf ja utilizado"})
+        }
+        if(await User.findOne({pnumber})){
+            return res.status(400).send({error:"Numero ja utilizado"})
+        }
+
+        const user = await User.create(req.body)
+        user.password = undefined;
+
+        return res.send({
+            user,
+            token:generateToken({id:user.id})
+        });
+    }catch(err){
+        return res.status(400).send({error:"O registro falhou"});
+    }
 
 }
 
 //Login
 const login = async(req,res) =>{
-    try{
-        const user = await User.findOne({email:req.body.email});
-        if(user){
-            const result = await bcrypt.compare(req.body.password, user.password);
-            if(result){
-                const token  = await jwt.sign({email:user.email},JWT_SECRET);
-                res.json({token});
-            }else{
-                res.status(400).json({ error: "As senhas nao sao iguais" });
-            }
-        }else{
-            res.status(400).json({ error: "Usuario nao existe" });
-        }
-        
-    }catch(error){
-        res.status(404).json({error});
+    const {email, password} = req.body;
+    const user = await User.findOne({email}).select('+password');
+    if(!user){
+        return res.status(400).send({error:"Usuario nao encontrado"});
     }
-  
+    if(!await bcrypt.compare(password,user.password)){
+        return res.status(400).send({error:"Senha invalida"});
+    }
+
+    user.password = undefined;
+    res.send({user, token: generateToken({ id: user.id })});
+
 }
 
 //Logout
