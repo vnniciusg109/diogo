@@ -5,14 +5,14 @@ const {getTicket,getTickets,createTicket,updateTicket,deleteTicket} = require('.
 const{ authenticateUser } = require('../middlewares/authentication');
 
 router.route('/')
-            .post(authenticateUser,createTicket)
+            .post(createTicket)
             .get(getTickets)
 
 
 router.route('/:id')
             .get(getTicket)
-            .patch(authenticateUser,updateTicket)
-            .delete(authenticateUser,deleteTicket)
+            .patch(updateTicket)
+            .delete(deleteTicket)
 
 
 module.exports = router

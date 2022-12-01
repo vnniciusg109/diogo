@@ -6,13 +6,13 @@ const {getSingleEventTicket} = require('../controllers/ticketController')
 
 
 router.route('/')
-      .post(authenticateUser,authorizePermissions('event',createEvent))
+      .post(createEvent)
       .get(getEvents)
       
 router.route('/:id')
       .get(getEvent)
-      .patch(authenticateUser,authorizePermissions('event'),updateEvent)
-      .delete(authenticateUser,authorizePermissions('event'),deleteEvent)
+      .patch(updateEvent)
+      .delete(deleteEvent)
 
 router.route('/:id/tickets')
       .get(getSingleEventTicket)
