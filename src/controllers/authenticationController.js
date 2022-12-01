@@ -1,6 +1,7 @@
 const User = require('../models/userModel');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const{StatusCodes} = require('http-status-codes')
 
 require('dotenv').config()
 
