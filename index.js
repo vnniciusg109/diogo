@@ -18,7 +18,7 @@ const user_route = require('./src/routes/userRoute');
 //const cart_route = require('./src/routes/cartRoute');
 
 var port = process.env.PORT || 5173;
-const app = express()
+const app = express();
 
 app.use(cors());
 app.use(logger('dev'));
