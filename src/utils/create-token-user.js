@@ -18,11 +18,7 @@ const createTokenUser = (res,user) =>{
 
     const token = createJWT({payload:user});
     res.send({
-        name:user.name,
-        userId: user._id,
-        role:user.role,
         token:token
-        
 });
 };
 

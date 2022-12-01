@@ -1,54 +1,39 @@
 const User = require('../models/userModel');
 const {StatusCodes} = require('http-status-codes');
 const CustomError = require('../errors');
-const {attachCookiesToResponse,createTokenUser} = require('../utils');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+
 
 
 //Registrar Usuario
 const register = async(req,res) =>{
-    const{username,lastname,cpf,pnumber,email,password} = req.body;
-
-    const emailExist = await User.findOne({email});
-    if (emailExist) {
-        throw new CustomError.BadRequestError('Email ja utilizado');
-    }
-    const cpfExist = await User.findOne({cpf});
-    if (cpfExist) {
-        throw new CustomError.BadRequestError('Cpf ja utilizado');
-    }
-    const pnumberExist = await User.findOne({pnumber});
-    if (pnumberExist) {
-        throw new CustomError.BadRequestError('Numero ja utilizado');
-    }
-
-    const isFirstAccount = (await User.countDocuments({})) === 0;
-    const role = isFirstAccount ? 'user':'event';
-    const user = await User.create({username,lastname,cpf,pnumber,email,password,role});
-    const userToken = createTokenUser(user);
-    attachCookiesToResponse({res,user:userToken});
-    res.status(StatusCodes.CREATED).json({user})
+    var newUser = new User(req.body);
+    newUser.password = bcrypt.hashSync(req.body.password,10);
+    newUser.save(function(err,user){
+        if(err){
+            return res.status(404).send({message:err})
+        }else{
+            user.password = undefined;
+            return res.json(user);
+        }
+    })
 
 }
 
 //Login
 const login = async(req,res) =>{
-    const {email,password} = req.body;
-    if(!email || !password){
-        throw new CustomError.BadRequestError('Insira um e-mail e uma senha!');
-    }
-    const user = await User.findOne({email}).select('+password');
-    if(!user){
-        throw new CustomError.NotFoundError('Nao foi encontrado um usuario com esse email!');
-    }
+    User.findOne({
+        email:req.body.email
+    }, function(err,user){
+        if(err)throw err;
+        if(!user||!user.comparePassword(req.body.password)){
+            return res.status(401).json({ message: 'Email ou senha Invalido' });
+        }
+        return res.json({token:jwt.sign({email:user.email, _id: user._id })});
 
-    const isPasswordCorrect = await user.comparePassword(password);
-    if(!isPasswordCorrect){
-        throw new CustomError.UnauthenticatedError('Credenciais Invalidas!');
-    }
-
-   
-    res.status(StatusCodes.OK).json({token: createTokenUser({ id: user.id })});
-
+    })
+  
 }
 
 //Logout
