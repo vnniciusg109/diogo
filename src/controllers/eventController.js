@@ -13,8 +13,8 @@ const createEvent = async(req,res) =>{
 //Listar todos os eventos
 
 const getEvents = async(req,res) =>{
-    const events = await Event.find( { } );
-    res.status(StatusCodes.OK).json({events, count:events.length});
+    const events = await Event.find({});
+    res.status(StatusCodes.OK).json({events});
 }
 
 //Listar evento em especifico

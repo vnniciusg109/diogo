@@ -1,6 +1,8 @@
 const User = require('../models/userModel');
 const {StatusCodes} = require('http-status-codes');
 const CustomError = require('../errors');
+const bcrypt = require('bcryptjs');
+
 const {attachCookiesToResponse,createTokenUser} = require('../utils');
 
 
@@ -32,24 +34,16 @@ const register = async(req,res) =>{
 
 //Login
 const login = async(req,res) =>{
-    const {email,password} = req.body;
-    if(!email || !password){
-        throw new CustomError.BadRequestError('Insira um e-mail e uma senha!');
-    }
-    const user = await User.findOne({email}).select('+password');
-    if(!user){
-        throw new CustomError.NotFoundError('Nao foi encontrado um usuario com esse email!');
-    }
+    const user = await User.findOne({ email }).select('+password')
 
-    const isPasswordCorrect = await user.comparePassword(password);
-    if(!isPasswordCorrect){
-        throw new CustomError.UnauthenticatedError('Credenciais Invalidas!');
-    }
+    if (!user)
+      return res.status(400).send({error:'Usuário não encontrado'})
+     
+    if(!await bcrypt.compare(password, user.password))
+      return res.status(400).send({ error: 'Senha invalida'})
+    
 
-    const tokenUser = createTokenUser(user);
-    const cookieToken = attachCookiesToResponse({res,user:tokenUser});
-    res.status(StatusCodes.OK).json({user, token: cookieToken({ id: user.id })});
-
+      res.send({user, token: createTokenUser({ id: user.id })})
 }
 
 //Logout
