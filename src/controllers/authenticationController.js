@@ -1,8 +1,8 @@
 const User = require('../models/userModel');
 const {StatusCodes} = require('http-status-codes');
-const CustomError = require('../errors');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const {JWT_SECRET = "jwt_secret"} = process.env
 
 
 
@@ -23,16 +23,23 @@ const register = async(req,res) =>{
 
 //Login
 const login = async(req,res) =>{
-    User.findOne({
-        email:req.body.email
-    }, function(err,user){
-        if(err)throw err;
-        if(!user||!user.comparePassword(req.body.password)){
-            return res.status(401).json({ message: 'Email ou senha Invalido' });
+    try{
+        const user = await User.findOne({email:req.body.email});
+        if(user){
+            const result = await bcrypt.compare(req.body.password, user.password);
+            if(result){
+                const token  = await jwt.sign({email:user.email},JWT_SECRET);
+                res.json({token});
+            }else{
+                res.status(400).json({ error: "As senhas nao sao iguais" });
+            }
+        }else{
+            res.status(400).json({ error: "Usuario nao existe" });
         }
-        return res.json({token:jwt.sign({email:user.email, _id: user._id })});
-
-    })
+        
+    }catch(error){
+        res.status(404).json({error});
+    }
   
 }
 
