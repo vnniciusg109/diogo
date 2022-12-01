@@ -20,10 +20,9 @@ const user_route = require('./src/routes/userRoute');
 var port = process.env.PORT || 8080;
 const app = express()
 
-app.use((req, res, next) => {
+app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", 'GET,PUT,POST,DELETE');
-    app.use(cors());
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
 
