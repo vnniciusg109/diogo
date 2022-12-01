@@ -17,7 +17,7 @@ const user_route = require('./src/routes/userRoute');
 
 //const cart_route = require('./src/routes/cartRoute');
 
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 5173;
 const app = express()
 
 app.use(cors());
@@ -41,4 +41,4 @@ app.use('/api/auth',auth_route);
 
 
 var server=app.listen(port,function() {
-    console.log("app running on port 8080"); });
+    console.log("app running on port 5173"); });
