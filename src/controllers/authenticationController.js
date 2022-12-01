@@ -24,7 +24,9 @@ const register = async(req,res) =>{
     const isFirstAccount = (await User.countDocuments({})) === 0;
     const role = isFirstAccount ? 'user':'event';
     const user = await User.create({username,lastname,cpf,pnumber,email,password,role});
-    res.status(StatusCodes.CREATED).json({user,token : createTokenUser({user})})
+    const userToken = createTokenUser(user);
+    attachCookiesToResponse({res,user:userToken});
+    res.status(StatusCodes.CREATED).json({user})
 
 }
 
@@ -44,9 +46,8 @@ const login = async(req,res) =>{
         throw new CustomError.UnauthenticatedError('Credenciais Invalidas!');
     }
 
-    const tokenUser = createTokenUser(user);
-    attachCookiesToResponse({res,user:tokenUser});
-    res.status(StatusCodes.OK).json({user});
+   
+    res.status(StatusCodes.OK).json({user , token: createTokenUser(user));
 
 }
 
