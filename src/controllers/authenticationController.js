@@ -54,7 +54,7 @@ const login = async(req,res) =>{
     }
 
     user.password = undefined;
-    res.send({ token: generateToken({ id: user.id })});
+    res.send({user, token: generateToken({ id: user.id })});
 
 }
 
